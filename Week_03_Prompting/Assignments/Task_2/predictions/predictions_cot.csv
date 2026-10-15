@@ -1,0 +1,1088 @@
+question_idx,question,predicted_sql,raw_output,prompt_id,framework,model,agent,agent_version,inference_ms,api_ms,input_tokens,output_tokens,cache_read_tokens,cache_creation_tokens,is_error,timestamp
+0,What is the best place in winters for tea food ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'winters' AND R.FOOD_TYPE = 'tea' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'winters' AND R2.FOOD_TYPE = 'tea');","1. Request: ""best place ... for tea food"" is the restaurant request; ""in winters"" is the location.
+2. Place: ""winters"" is treated as a city, so L.CITY_NAME = 'winters'.
+3. Food and rating: food type is 'tea'; ""best"" means R.RATING equals the maximum rating among tea restaurants in winters.
+4. Assumptions: ""winters"" is a city, not a region or street; ""tea food"" maps to FOOD_TYPE = 'tea'; all values are lowercase.
+5. Check: selects exactly L.HOUSE_NUMBER, R.NAME; uses equality against the subquery MAX (no >=); no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'winters' AND R.FOOD_TYPE = 'tea' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'winters' AND R2.FOOD_TYPE = 'tea');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),5172,5048,2,909,0,2136,False,2026-10-14T20:09:50+00:00
+1,What is the best place in moraga for european food ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'moraga' AND R.FOOD_TYPE = 'european' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'moraga' AND R2.FOOD_TYPE = 'european');","1. Request: ""best place in moraga for european food"" is the restaurant request; ""best"" means the top rating.
+2. Place: moraga is a city, so L.CITY_NAME = 'moraga'.
+3. Food and rating: R.FOOD_TYPE = 'european', and ""best"" means R.RATING equals the maximum rating among european restaurants in moraga.
+4. Assumptions: the food type is stored as 'european' in lowercase, and ties for the top rating should all be returned.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses equality for the max-rating condition, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'moraga' AND R.FOOD_TYPE = 'european' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'moraga' AND R2.FOOD_TYPE = 'european');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4560,4424,2,1019,0,2136,False,2026-10-14T20:09:57+00:00
+2,What is the best place in eagan for egyptian food ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'eagan' AND R.FOOD_TYPE = 'egyptian' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'eagan' AND R2.FOOD_TYPE = 'egyptian');","1. Request: ""best place ... for egyptian food"" is the restaurant request; ""in eagan"" sets the place.
+2. Place: eagan is a city, so L.CITY_NAME = 'eagan'.
+3. Food and rating: R.FOOD_TYPE = 'egyptian'; ""best"" means R.RATING equals the maximum rating among egyptian restaurants in eagan.
+4. Assumptions: ""place"" means restaurant; eagan is not a region or street; ties for the top rating return all matching restaurants.
+5. Check: the query selects exactly L.HOUSE_NUMBER, R.NAME, uses = against the subquery maximum, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'eagan' AND R.FOOD_TYPE = 'egyptian' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'eagan' AND R2.FOOD_TYPE = 'egyptian');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4221,4067,2,960,0,2139,False,2026-10-14T20:10:03+00:00
+3,What is the best place in atherton for burmese food ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'atherton' AND R.FOOD_TYPE = 'burmese' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'atherton' AND R2.FOOD_TYPE = 'burmese');","1. Request: ""best place in atherton for burmese food"" is the restaurant request; ""best"" sets the rating condition.
+2. Place: atherton is a city, so L.CITY_NAME = 'atherton'.
+3. Food and rating: R.FOOD_TYPE = 'burmese'; ""best"" means R.RATING equals the maximum rating among burmese restaurants in atherton.
+4. Assumptions: ""atherton"" is a city name rather than a region, and the values are stored in lowercase as stated.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses equality for the maximum rating, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'atherton' AND R.FOOD_TYPE = 'burmese' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'atherton' AND R2.FOOD_TYPE = 'burmese');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4051,3914,2,928,0,2138,False,2026-10-14T20:10:09+00:00
+4,"What is the best place in tahoe city for potatoes food, and I have not settled whether pasta belongs in a lunchbox or a flowerpot?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'tahoe city' AND R.FOOD_TYPE = 'potatoes' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'tahoe city' AND R2.FOOD_TYPE = 'potatoes');","1. Request: best potatoes restaurant in Tahoe City. The lunchbox/flowerpot pasta sentence is unrelated.
+2. Place: ""Tahoe City"" is a city, so L.CITY_NAME = 'tahoe city'.
+3. Food and rating: food type 'potatoes'; ""best"" means R.RATING equals the maximum rating among potatoes restaurants in Tahoe City.
+4. Assumptions: the food type is stored as 'potatoes', and ""best"" allows ties, so every restaurant at the maximum rating is returned.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and uses an equality comparison against the subquery maximum, as ""best"" requires.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'tahoe city' AND R.FOOD_TYPE = 'potatoes' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'tahoe city' AND R2.FOOD_TYPE = 'potatoes');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4880,4729,2,1079,0,2169,False,2026-10-14T20:10:16+00:00
+5,What is the best californian in portola valley ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'portola valley' AND R.FOOD_TYPE = 'californian' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'portola valley' AND R2.FOOD_TYPE = 'californian');","1. Request: ""What is the best californian in portola valley?"" (the rest of the question is just wording).
+2. Place: portola valley is a city, so L.CITY_NAME = 'portola valley'.
+3. Food and rating: food type is californian; ""best"" means R.RATING equals the maximum rating among californian restaurants in portola valley.
+4. Assumptions: ""californian"" is the exact lowercase FOOD_TYPE value, and ""best"" means the top-rated restaurant(s), so ties are all returned.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses an equality against the subquery maximum, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'portola valley' AND R.FOOD_TYPE = 'californian' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'portola valley' AND R2.FOOD_TYPE = 'californian');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4086,3940,2,701,0,2133,False,2026-10-14T20:36:57+00:00
+6,"What is the best dim sum in santa rosa, and I still cannot decide whether soup or pie is the better breakfast?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'santa rosa' AND R.FOOD_TYPE = 'dim sum' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'santa rosa' AND R2.FOOD_TYPE = 'dim sum');","1. Request: the best dim sum restaurant in Santa Rosa. The soup-or-pie sentence is not a restaurant request, so I ignore it.
+2. Place: ""santa rosa"" is a city, so L.CITY_NAME = 'santa rosa'.
+3. Food and rating: food type is 'dim sum'; ""best"" means R.RATING equals the maximum rating among dim sum restaurants in Santa Rosa.
+4. Assumptions: the food type is stored as 'dim sum' (lowercase, with a space); Santa Rosa is stored as a city name in LOCATION.CITY_NAME; ties at the top rating are all returned.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and the subquery applies the same city and food filters as the outer query.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'santa rosa' AND R.FOOD_TYPE = 'dim sum' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'santa rosa' AND R2.FOOD_TYPE = 'dim sum');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4699,4532,2,1004,0,2158,False,2026-10-14T20:37:04+00:00
+7,"On an unrelated menu question, I am torn between curry and apple pie, What is the best peruvian in crockett ?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'crockett' AND R.FOOD_TYPE = 'peruvian' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'crockett' AND R2.FOOD_TYPE = 'peruvian');","1. Request: ""what is the best peruvian in crockett"" is the restaurant request. The curry vs. apple pie sentence is unrelated.
+2. Place: ""crockett"" is a city, so L.CITY_NAME = 'crockett'.
+3. Food and rating: food type is 'peruvian'. ""Best"" means the maximum rating within those filters, so R.RATING equals the MAX subquery.
+4. Assumptions: ""crockett"" is a city name in LOCATION.CITY_NAME, not a region or street. The food type is stored as 'peruvian'. Ties at the top rating return all matching restaurants.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and uses equality to the maximum rating, which is the correct form for ""best.""
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'crockett' AND R.FOOD_TYPE = 'peruvian' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'crockett' AND R2.FOOD_TYPE = 'peruvian');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4914,4761,2,1021,0,2157,False,2026-10-14T20:37:11+00:00
+8,What is the best eclectic in calistoga ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'calistoga' AND R.FOOD_TYPE = 'eclectic' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'calistoga' AND R2.FOOD_TYPE = 'eclectic');","1. Request: ""What is the best eclectic in calistoga"" asks for the top-rated eclectic restaurant in calistoga. ""Best"" is the only rating condition.
+2. Place: calistoga is a city, so L.CITY_NAME = 'calistoga'.
+3. Food and rating: food type is 'eclectic', and ""best"" means R.RATING equals the maximum rating among eclectic restaurants in calistoga.
+4. Assumptions: ""eclectic"" is the food type value; ""best"" means highest rating, so ties return every restaurant at the maximum; the subquery applies the same city and food filters.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses = against a MAX subquery, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'calistoga' AND R.FOOD_TYPE = 'eclectic' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'calistoga' AND R2.FOOD_TYPE = 'eclectic');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4895,4787,2,1075,0,2135,False,2026-10-14T20:37:18+00:00
+9,What is the best delivery in rio del mar ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'rio del mar' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'rio del mar');","1. Request: ""best ... in rio del mar"" is the restaurant request; ""delivery"" is a service, not a food type.
+2. Place: rio del mar is a city -> L.CITY_NAME = 'rio del mar'.
+3. Food and rating: no food type filter; ""best"" -> R.RATING equals the maximum rating of restaurants in rio del mar.
+4. Assumptions: ""delivery"" is not a FOOD_TYPE value, so I ignore it rather than filter on it; the maximum is taken over all restaurants in the city.
+5. Check: selects exactly L.HOUSE_NUMBER, R.NAME; uses equality against MAX rather than >; no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'rio del mar' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'rio del mar');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4786,4600,2,926,0,2135,False,2026-10-14T20:37:24+00:00
+10,"While comparing dumplings with pancakes for an imaginary picnic, give me a restaurant on timber creek dr in san jose with a rating above 1.7 (poorly rated or better)?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'timber creek dr' AND L.CITY_NAME = 'san jose' AND R.RATING > 1.7;","1. Request: ""give me a restaurant on timber creek dr in san jose with a rating above 1.7."" The dumplings-and-pancakes sentence is unrelated.
+2. Place: ""san jose"" is a city, so L.CITY_NAME = 'san jose'. ""timber creek dr"" is a street, matched exactly on L.STREET_NAME.
+3. Food and rating: no food type is requested, so none is filtered. ""Above 1.7"" gives R.RATING > 1.7.
+4. Assumptions: the street is stored as 'timber creek dr' with the ""dr"" abbreviation, and ""poorly rated or better"" is just a gloss on 1.7 rather than a separate condition.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'timber creek dr' AND L.CITY_NAME = 'san jose' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4261,4073,2,920,0,2181,False,2026-10-14T20:37:31+00:00
+11,give me a restaurant on plaza way in lafayette with a rating above 1.8 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'plaza way' AND L.CITY_NAME = 'lafayette' AND R.RATING > 1.8;","1. Request: ""give me a restaurant on plaza way in lafayette with a rating above 1.8"" (the rest is conversational and ignored).
+2. Place: ""plaza way"" is a street, so match LOCATION.STREET_NAME = 'plaza way' exactly. ""lafayette"" is a city, so match LOCATION.CITY_NAME = 'lafayette'.
+3. Food and rating: no food type is given. ""above 1.8"" means R.RATING > 1.8.
+4. Assumptions: ""lafayette"" refers to the city in LOCATION.CITY_NAME, not a region. The street name is stored exactly as ""plaza way"" in lowercase.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses "">"", and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'plaza way' AND L.CITY_NAME = 'lafayette' AND R.RATING > 1.8;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4050,3883,2,834,0,2157,False,2026-10-14T20:37:37+00:00
+12,give me a restaurant on avenue near the alameda in belmont with a rating above 2.3 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'belmont' AND L.STREET_NAME = 'alameda' AND R.RATING > 2.3;","1. Request: ""give me a restaurant ... with a rating above 2.3"" is the actual request; the rest describes the location.
+2. Place: ""belmont"" is a city -> L.CITY_NAME = 'belmont'; ""alameda"" is a street -> L.STREET_NAME = 'alameda' (exact match).
+3. Food and rating: no food type is specified; ""above 2.3"" -> R.RATING > 2.3.
+4. Assumptions: ""avenue"" is the street type rather than part of the stored name; ""near"" is ignored because the schema has no proximity data; the street is stored as 'alameda' without the suffix.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'belmont' AND L.STREET_NAME = 'alameda' AND R.RATING > 2.3;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),6231,6074,2,1355,0,2157,False,2026-10-14T20:37:46+00:00
+13,give me a restaurant on w evelyn ave ste 108 in sunnyvale with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'w evelyn ave' AND L.CITY_NAME = 'sunnyvale' AND R.RATING > 2;","1. Request: find a restaurant with a rating above 2; the street, city, and ""ste 108"" are the location.
+2. Place: ""w evelyn ave"" is a street -> L.STREET_NAME = 'w evelyn ave' (exact), and ""sunnyvale"" is a city -> L.CITY_NAME = 'sunnyvale'.
+3. Food and rating: no food type given; above 2 -> R.RATING > 2.
+4. Assumptions: ""ste 108"" is a suite number with no matching column, so I ignore it; street and city values are stored lowercase as the schema states; no DISTINCT, ORDER BY, or LIMIT is needed.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and includes no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'w evelyn ave' AND L.CITY_NAME = 'sunnyvale' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4059,3880,2,705,0,2162,False,2026-10-14T20:37:52+00:00
+14,give me a restaurant on san ignacio ave in san jose with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'san ignacio ave' AND L.CITY_NAME = 'san jose' AND R.RATING > 1.7;","1. Request: ""give me a restaurant"" on san ignacio ave in san jose with a rating above 1.7. The rest is filler.
+2. Place: san jose is a city and san ignacio ave is a street, so use L.STREET_NAME and L.CITY_NAME with exact matches.
+3. Food and rating: no food type is given, and ""above 1.7"" means R.RATING > 1.7.
+4. Assumptions: the street is stored as 'san ignacio ave' with the suffix included, and the city is stored as 'san jose'. Both are lowercase.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'san ignacio ave' AND L.CITY_NAME = 'san jose' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3868,3697,2,732,0,2159,False,2026-10-14T20:37:58+00:00
+15,where can i eat drive in food in palo alto ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'palo alto' AND R.FOOD_TYPE = 'drive in';","1. Request: ""where can i eat drive in food"" is the restaurant request; ""in palo alto"" supplies the place.
+2. Place: ""palo alto"" is a city, so filter LOCATION.CITY_NAME = 'palo alto'.
+3. Food and rating: food type is ""drive in""; there is no rating condition.
+4. Assumptions: the FOOD_TYPE value is stored as 'drive in' with a space, matching the question's wording; I did not add a GEOGRAPHIC join because the place is a city, not a region.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no rating comparison.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'palo alto' AND R.FOOD_TYPE = 'drive in';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3468,3254,2,703,0,2136,False,2026-10-14T20:38:04+00:00
+16,where can i eat bar food in glen ellen ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'glen ellen' AND R.FOOD_TYPE = 'bar food';","1. Request: ""where can i eat bar food in glen ellen"" is the restaurant request; ""where can i eat"" is just phrasing.
+2. Place: glen ellen is a city, so filter on L.CITY_NAME = 'glen ellen'.
+3. Food and rating: food type is bar food, and no rating condition is given.
+4. Assumptions: FOOD_TYPE stores the value 'bar food' exactly, in lowercase; the city is stored as 'glen ellen'.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'glen ellen' AND R.FOOD_TYPE = 'bar food';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3854,3690,2,705,0,2136,False,2026-10-14T20:38:10+00:00
+17,where can i eat juice bar food in foster city ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'foster city' AND R.FOOD_TYPE = 'juice bar';","1. Request: ""where can I eat juice bar food in foster city"" (the restaurant request is the juice bar food lookup in foster city).
+2. Place: foster city is a city, so L.CITY_NAME = 'foster city'.
+3. Food and rating: food type is juice bar, so R.FOOD_TYPE = 'juice bar'; no rating condition.
+4. Assumptions: the food type is stored as the exact lowercase string 'juice bar', and the city is stored as 'foster city' in LOCATION.CITY_NAME.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no rating comparison.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'foster city' AND R.FOOD_TYPE = 'juice bar';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3394,3216,2,654,0,2136,False,2026-10-14T20:38:16+00:00
+18,where can i eat spanish food in oakland ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'oakland' AND R.FOOD_TYPE = 'spanish';","1. Request: ""where can i eat spanish food"" is the restaurant request; ""in oakland"" is the location, and the rest is filler.
+2. Place: oakland is a city, so L.CITY_NAME = 'oakland'.
+3. Food and rating: food type is spanish (R.FOOD_TYPE = 'spanish'); no rating condition is given.
+4. Assumptions: ""oakland"" refers to the city name stored in LOCATION.CITY_NAME, and ""spanish"" matches FOOD_TYPE exactly after lowercasing.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no rating comparison, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'oakland' AND R.FOOD_TYPE = 'spanish';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3304,3107,2,600,0,2135,False,2026-10-14T20:38:21+00:00
+19,where can i eat swiss food in moss beach ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'moss beach' AND R.FOOD_TYPE = 'swiss';","1. Request: ""where can i eat swiss food in moss beach"" is the restaurant request. ""Where can i eat"" and the rest are framing.
+2. Place: ""moss beach"" is a city, so L.CITY_NAME = 'moss beach'.
+3. Food and rating: food type is 'swiss'. No rating condition.
+4. Assumptions: ""swiss"" matches FOOD_TYPE exactly, and the city is stored as 'moss beach' in LOCATION.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, LIMIT, or rating filter.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'moss beach' AND R.FOOD_TYPE = 'swiss';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3344,3129,2,592,0,2136,False,2026-10-14T20:38:27+00:00
+20,"what is a restaurant in forestville with a rating above 4.5 (excellent or better), though I am also choosing between noodles and a sandwich for a rainy picnic?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'forestville' AND R.RATING > 4.5;","1. Request: ""what is a restaurant ... with a rating above 4.5""; the noodles-versus-sandwich sentence is unrelated.
+2. Place: forestville is a city, so L.CITY_NAME = 'forestville'.
+3. Food and rating: no food type is requested; ""above 4.5"" means R.RATING > 4.5.
+4. Assumptions: forestville is a city rather than a region or street, and the noodles/sandwich choice is not a food-type filter.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'forestville' AND R.RATING > 4.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4132,3959,2,806,0,2174,False,2026-10-14T20:38:33+00:00
+21,what is a restaurant in vallejo with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'vallejo' AND R.RATING > 2;","1. Request: ""what is a restaurant ... with a rating above 2"" is the request. The ""in vallejo"" part sets the place.
+2. Place: vallejo is a city, so filter on LOCATION.CITY_NAME = 'vallejo'.
+3. Food and rating: no food type is given. ""Above 2"" means R.RATING > 2.
+4. Assumptions: ""below average or better"" is a gloss on the threshold and doesn't change the condition, which is strictly greater than 2. Vallejo is a city, not a region or street.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'vallejo' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3764,3613,2,626,0,2147,False,2026-10-14T20:38:39+00:00
+22,what is a restaurant in alameda with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'alameda' AND R.RATING > 2;","1. Request: ""what is a restaurant in alameda with a rating above 2"" is the request. The rest of the sentence is the parenthetical gloss on the rating.
+2. Place: ""alameda"" is treated as a city, so L.CITY_NAME = 'alameda'.
+3. Food and rating: no food type is specified, and ""above 2"" means R.RATING > 2.
+4. Assumptions: ""alameda"" refers to the city rather than the county or a street. The rating scale is numeric, so ""above 2"" is a strict comparison.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'alameda' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3163,2989,2,560,0,2146,False,2026-10-14T20:38:45+00:00
+23,what is a restaurant in san juan bautista with a rating above 4.5 (excellent or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san juan bautista' AND R.RATING > 4.5;","1. Request: ""a restaurant in san juan bautista with a rating above 4.5"" is the request; the ""(excellent or better)"" is a gloss on 4.5.
+2. Place: ""san juan bautista"" is a city, so filter L.CITY_NAME = 'san juan bautista'.
+3. Food and rating: no food type is specified; ""above 4.5"" maps to R.RATING > 4.5.
+4. Assumptions: the city name is stored in lowercase as 'san juan bautista'; ""above"" means strictly greater than, so 4.5 itself is excluded; no food type filter is needed.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san juan bautista' AND R.RATING > 4.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3571,3408,2,750,0,2152,False,2026-10-14T20:38:50+00:00
+24,"what is a restaurant in larkspur with a rating above 4.5 (excellent or better), and I am still weighing curry against apple pie for a trip to the moon?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'larkspur' AND R.RATING > 4.5;","1. Request: find a restaurant in Larkspur rated above 4.5. The curry, apple pie, and moon sentences are not part of the request.
+2. Place: ""larkspur"" is a city, so L.CITY_NAME = 'larkspur'.
+3. Food and rating: no food type is specified, so no food filter. ""Excellent or better"" is above 4.5, so R.RATING > 4.5.
+4. Assumptions: Larkspur refers to the city rather than a region or street, and ""excellent or better"" means strictly above 4.5, as the question states.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'larkspur' AND R.RATING > 4.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3674,3530,2,673,0,2172,False,2026-10-14T20:38:56+00:00
+25,"A very long menu debate has occupied my afternoon: should a picnic feature warm noodles, cold muffins, or an elaborate tower of crackers, and would any of them pair well with a map of imaginary islands? what are some restaurants in oakland with a rating above 2 (below average or better)? This also reminds me of an unrelated menu puzzle involving pumpkin biscuits, chilled soup, and an imaginary picnic where every plate must be shared with a different stuffed animal.","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'oakland' AND R.RATING > 2;","1. Request: restaurants in Oakland with a rating above 2. The picnic menu and pumpkin biscuit sentences are not part of it.
+2. Place: Oakland is a city, so L.CITY_NAME = 'oakland'.
+3. Food and rating: no food type is specified. ""Above 2"" means R.RATING > 2.
+4. Assumptions: ""oakland"" matches LOCATION.CITY_NAME exactly, and the parenthetical ""below average or better"" is only a gloss, so I use the strict > from the examples.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'oakland' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3806,3665,2,719,0,2277,False,2026-10-14T20:39:03+00:00
+26,"what are some restaurants in vacaville with a rating above 2 (below average or better), while I wonder if dumplings or pancakes could help me find my misplaced umbrella?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'vacaville' AND R.RATING > 2;","1. Request: restaurants in vacaville with a rating above 2. The umbrella sentence is unrelated.
+2. Place: vacaville is a city -> L.CITY_NAME = 'vacaville'.
+3. Food and rating: the dumplings/pancakes clause is a tangent like the soup/pie example, so no food filter. Rating: above 2 -> R.RATING > 2.
+4. Assumptions: ""dumplings or pancakes"" isn't a restaurant filter. The query matches all food types in vacaville.
+5. Check: selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'vacaville' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),5336,5149,2,1107,0,2175,False,2026-10-14T20:39:10+00:00
+27,what are some restaurants in alameda with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'alameda' AND R.RATING > 2;","1. Request: ""what are some restaurants in alameda with a rating above 2"" is the request. The rest of the question is filler.
+2. Place: ""alameda"" is a city, so L.CITY_NAME = 'alameda'.
+3. Food and rating: no food type is given, and ""above 2"" means R.RATING > 2.
+4. Assumptions: ""alameda"" refers to the city, not a county or region. ""Below average or better"" is only a gloss on the threshold, so I use the stated condition R.RATING > 2 and no other filter.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses strict >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'alameda' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3863,3691,2,761,0,2146,False,2026-10-14T20:39:16+00:00
+28,what are some restaurants in east palo alto with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'east palo alto' AND R.RATING > 2;","1. Request: ""what are some restaurants in east palo alto with a rating above 2"" (the ""below average or better"" clause is a gloss on the threshold).
+2. Place: ""east palo alto"" is a city, so L.CITY_NAME = 'east palo alto'.
+3. Food and rating: no food type is specified; rating above 2 means R.RATING > 2.
+4. Assumptions: the city filter applies to LOCATION.CITY_NAME, matching the examples; the text is lowercase; no street, region, or ""best"" condition applies.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses "">"", and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'east palo alto' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3909,3725,2,639,0,2148,False,2026-10-14T20:39:22+00:00
+29,what are some restaurants in santa cruz with a rating above 2.5 (average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'santa cruz' AND R.RATING > 2.5;","1. Request: ""what are some restaurants in santa cruz with a rating above 2.5"" is the request; the rest of the question is filler.
+2. Place: ""santa cruz"" is a city, so L.CITY_NAME = 'santa cruz'.
+3. Food and rating: no food type is specified; ""above 2.5"" means R.RATING > 2.5.
+4. Assumptions: ""santa cruz"" refers to the city, not the county; no food type filter; results are restaurants with at least one location.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'santa cruz' AND R.RATING > 2.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3458,3279,2,662,0,2149,False,2026-10-14T20:39:28+00:00
+30,what is a restaurant in brentwood with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'brentwood' AND R.RATING > 2;","1. Request: ""what is a restaurant in brentwood with a rating above 2""
+2. Place: ""brentwood"" is a city, so L.CITY_NAME = 'brentwood'.
+3. Food and rating: no food type is specified; ""above 2"" gives R.RATING > 2.
+4. Assumptions: ""brentwood"" refers to the city, not a region or street. The parenthetical ""below average or better"" is ignored in favor of the explicit ""above 2"" condition.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'brentwood' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3045,2797,2,563,0,2147,False,2026-10-14T20:39:34+00:00
+31,what is a restaurant in mill valley with a rating above 4.5 (excellent or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'mill valley' AND R.RATING > 4.5;","1. Request: ""a restaurant in mill valley with a rating above 4.5"" (the ""excellent or better"" gloss is a restatement of the rating).
+2. Place: ""mill valley"" is a city, so L.CITY_NAME = 'mill valley'.
+3. Food and rating: no food type is given; ""above 4.5"" means R.RATING > 4.5.
+4. Assumptions: the city is matched on LOCATION.CITY_NAME, as in the examples, and the text is already lowercase.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'mill valley' AND R.RATING > 4.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3634,3517,2,788,0,2150,False,2026-10-14T20:39:40+00:00
+32,what is a restaurant in rio vista with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'rio vista' AND R.RATING > 2;","1. Request: ""what is a restaurant in rio vista with a rating above 2"" is the request; the rating parenthetical is just a gloss.
+2. Place: rio vista is a city -> L.CITY_NAME = 'rio vista'.
+3. Food and rating: no food type is given; ""above 2"" -> R.RATING > 2.
+4. Assumptions: ""rio vista"" is stored as a city name, not a region or street; all values are lowercase, so the literal is lowercase; no food filter is applied.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses > (not >=), and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'rio vista' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3223,2985,2,455,0,2147,False,2026-10-14T20:39:45+00:00
+33,what is a restaurant in rio del mar with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'rio del mar' AND R.RATING > 1.7;","1. Request: ""a restaurant in rio del mar with a rating above 1.7"" is the request; the parenthetical ""poorly rated or better"" is just a label for the rating scale.
+2. Place: ""rio del mar"" is a city, so filter on L.CITY_NAME = 'rio del mar'.
+3. Food and rating: no food type is specified; rating above 1.7 means R.RATING > 1.7.
+4. Assumptions: ""a restaurant"" means any restaurant, so no food filter; the city filter uses LOCATION.CITY_NAME, following the city pattern in the examples; text is lowercase as stated.
+5. Check: selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'rio del mar' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3151,3018,2,644,0,2153,False,2026-10-14T20:39:50+00:00
+34,what is a restaurant in lafayette with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'lafayette' AND R.RATING > 2;","1. Request: ""what is a restaurant in lafayette with a rating above 2"" is the restaurant request; the parenthetical about average is a gloss.
+2. Place: ""lafayette"" is a city, so L.CITY_NAME = 'lafayette'.
+3. Food and rating: no food type is specified; rating above 2 means R.RATING > 2.
+4. Assumptions: ""lafayette"" refers to the city, not a region or street, and the text is lowercase as stated.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'lafayette' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3550,3368,2,637,0,2147,False,2026-10-14T20:39:56+00:00
+35,where can i eat some mexican food on noriega in san francisco with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'noriega' AND L.CITY_NAME = 'san francisco' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 2;","1. Request: ""where can I eat some mexican food on noriega"" is the request; the rest is filler.
+2. Place: noriega is a street, so L.STREET_NAME = 'noriega', with the city set to san francisco.
+3. Food and rating: R.FOOD_TYPE = 'mexican' and R.RATING > 2.
+4. Assumptions: ""san francisco"" is a city, so I filter on L.CITY_NAME; street names are stored without suffixes like ""street"" or ""avenue.""
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'noriega' AND L.CITY_NAME = 'san francisco' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4112,3912,2,676,0,2154,False,2026-10-14T20:40:03+00:00
+36,where can i eat some vietnamese food on shellmound st # 12 in emeryville with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'emeryville' AND L.STREET_NAME = 'shellmound st' AND L.HOUSE_NUMBER = 12 AND R.FOOD_TYPE = 'vietnamese' AND R.RATING > 1.7;","1. Request: ""where can i eat some vietnamese food"" is the restaurant request; ""on shellmound st # 12 in emeryville with a rating above 1.7"" supplies the constraints.
+2. Place: emeryville is a city (L.CITY_NAME = 'emeryville'), and shellmound st # 12 is a street address (L.STREET_NAME = 'shellmound st', L.HOUSE_NUMBER = 12).
+3. Food and rating: food type is vietnamese (R.FOOD_TYPE = 'vietnamese'); ""above 1.7"" means R.RATING > 1.7, and the ""poorly rated or better"" note is only a gloss.
+4. Assumptions: ""#12"" is the house number, so it is filtered as an exact match; HOUSE_NUMBER is stored as an integer; the rating cutoff is strictly greater than 1.7.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'emeryville' AND L.STREET_NAME = 'shellmound st' AND L.HOUSE_NUMBER = 12 AND R.FOOD_TYPE = 'vietnamese' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),7000,6851,2,1475,0,2167,False,2026-10-14T20:40:11+00:00
+37,where can i eat some mexican food on persian dr in sunnyvale with a rating above 4.5 (excellent or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'persian dr' AND L.CITY_NAME = 'sunnyvale' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 4.5;","1. Request: ""where can i eat some mexican food ... with a rating above 4.5"" is the restaurant request; ""on persian dr in sunnyvale"" supplies the location.
+2. Place: ""persian dr"" is a street -> L.STREET_NAME = 'persian dr' (exact); ""sunnyvale"" is a city -> L.CITY_NAME = 'sunnyvale'.
+3. Food and rating: food type is mexican -> R.FOOD_TYPE = 'mexican'; ""above 4.5"" -> R.RATING > 4.5.
+4. Assumptions: the street is stored as 'persian dr' with that abbreviation; the city filter uses LOCATION.CITY_NAME; ""(excellent or better)"" only explains the rating scale and adds no separate condition.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses > 4.5, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'persian dr' AND L.CITY_NAME = 'sunnyvale' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 4.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4882,4615,2,1028,0,2160,False,2026-10-14T20:40:18+00:00
+38,where can i eat some cafe food on el camino real in san bruno with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'el camino real' AND L.CITY_NAME = 'san bruno' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 2;","1. Request: ""where can i eat some cafe food on el camino real in san bruno with a rating above 2"" is the restaurant request. The ""rating above 2 (below average or better)"" part is the rating condition.
+2. Place: ""el camino real"" is a street, so L.STREET_NAME = 'el camino real' (exact match). ""san bruno"" is a city, so L.CITY_NAME = 'san bruno'.
+3. Food and rating: R.FOOD_TYPE = 'cafe'. ""Above 2"" gives R.RATING > 2.
+4. Assumptions: ""cafe food"" maps to FOOD_TYPE = 'cafe'. Both the street and the city filters apply, since the street name alone could exist in other cities.
+5. Check: the query selects exactly L.HOUSE_NUMBER, R.NAME, uses "">"", and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'el camino real' AND L.CITY_NAME = 'san bruno' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4787,4013,2,906,0,2155,False,2026-10-14T20:40:25+00:00
+39,where can i eat some pizza food on hawkins st in hollister with a rating above 4.5 (excellent or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'hawkins st' AND L.CITY_NAME = 'hollister' AND R.FOOD_TYPE = 'pizza' AND R.RATING > 4.5;","1. Request: ""where can i eat some pizza food on hawkins st in hollister with a rating above 4.5"" is the restaurant request. The rest is filler.
+2. Place: ""hollister"" is a city, so L.CITY_NAME = 'hollister'. ""hawkins st"" is a street, so L.STREET_NAME = 'hawkins st' (exact match).
+3. Food and rating: R.FOOD_TYPE = 'pizza'. ""above 4.5"" gives R.RATING > 4.5.
+4. Assumptions: ""pizza"" is stored as the lowercase value 'pizza' in FOOD_TYPE. The street name is stored as ""hawkins st"" with the abbreviation, as written in the question. No region or GEOGRAPHIC join is needed because the place is a city.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'hawkins st' AND L.CITY_NAME = 'hollister' AND R.FOOD_TYPE = 'pizza' AND R.RATING > 4.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3522,3377,2,627,0,2158,False,2026-10-14T20:40:31+00:00
+40,where is a restaurant on hillsdale mall in san mateo for ice cream food with a rating above 1.8 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'hillsdale mall' AND L.CITY_NAME = 'san mateo' AND R.FOOD_TYPE = 'ice cream' AND R.RATING > 1.8;","1. Request: ""where is a restaurant ... for ice cream food with a rating above 1.8"" (the rest is context).
+2. Place: ""on hillsdale mall"" is a street match, so L.STREET_NAME = 'hillsdale mall', and ""in san mateo"" is a city, so L.CITY_NAME = 'san mateo'.
+3. Food and rating: R.FOOD_TYPE = 'ice cream', and ""above 1.8"" gives R.RATING > 1.8.
+4. Assumptions: Hillsdale Mall appears in LOCATION.STREET_NAME as 'hillsdale mall'; the food type is stored as 'ice cream'; the parenthetical ""poorly rated or better"" is a gloss on 1.8 and not a separate condition.
+5. Check: selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'hillsdale mall' AND L.CITY_NAME = 'san mateo' AND R.FOOD_TYPE = 'ice cream' AND R.RATING > 1.8;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),5104,4720,2,1001,0,2166,False,2026-10-14T20:40:39+00:00
+41,where is a restaurant on st in sonoma for winery food with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'st' AND L.CITY_NAME = 'sonoma' AND R.FOOD_TYPE = 'winery' AND R.RATING > 1.7;","1. Request: ""where is a restaurant ... for winery food with a rating above 1.7"" (the rest is filler).
+2. Place: ""sonoma"" is a city, so L.CITY_NAME = 'sonoma'; ""st"" follows ""on,"" so it's an exact street match, L.STREET_NAME = 'st'.
+3. Food and rating: FOOD_TYPE = 'winery' and ""above 1.7"" means R.RATING > 1.7.
+4. Assumptions: ""st"" is the street name exactly as stored, not a street-type suffix; the food type value is 'winery'; the city filter uses LOCATION.CITY_NAME, as in the examples.
+5. Check: selects exactly L.HOUSE_NUMBER, R.NAME; uses `>`; no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'st' AND L.CITY_NAME = 'sonoma' AND R.FOOD_TYPE = 'winery' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),6721,6578,2,1377,0,2158,False,2026-10-14T20:40:48+00:00
+42,where is a restaurant on hartz av in danville for cafe food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'hartz av' AND L.CITY_NAME = 'danville' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 2;","1. Request: Find a restaurant on Hartz Av in Danville that serves cafe food and has a rating above 2.
+2. Place: Danville is a city, so L.CITY_NAME = 'danville'. Hartz Av is a street, so L.STREET_NAME = 'hartz av' (exact match).
+3. Food and rating: Food type is cafe, so R.FOOD_TYPE = 'cafe'. ""Above 2"" means R.RATING > 2.
+4. Assumptions: The street is stored as 'hartz av' and the city as 'danville', both lowercase. The parenthetical ""below average or better"" is only a gloss on the rating scale, so I did not add a stricter condition. No region filter is needed, so GEOGRAPHIC is not joined.
+5. Check: The query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'hartz av' AND L.CITY_NAME = 'danville' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4956,4826,2,976,0,2155,False,2026-10-14T20:40:55+00:00
+43,where is a restaurant on othello dr in fremont for cafe food with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'othello dr' AND L.CITY_NAME = 'fremont' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 1.7;","1. Request: ""where is a restaurant on othello dr in fremont for cafe food with a rating above 1.7"" (the rest is filler).
+2. Place: ""fremont"" is a city, so L.CITY_NAME = 'fremont'; ""othello dr"" is a street, so L.STREET_NAME = 'othello dr' (exact match).
+3. Food and rating: R.FOOD_TYPE = 'cafe'; ""above 1.7"" gives R.RATING > 1.7.
+4. Assumptions: ""othello dr"" is stored exactly as that lowercase string, with no ""drive"" or other variant; ""fremont"" is the city in LOCATION.CITY_NAME; no region filter is needed.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'othello dr' AND L.CITY_NAME = 'fremont' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4089,3929,2,847,0,2161,False,2026-10-14T20:41:02+00:00
+44,where is a restaurant on n.shoreline blvd. in mountain view for sandwiches food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'n.shoreline blvd.' AND L.CITY_NAME = 'mountain view' AND R.FOOD_TYPE = 'sandwiches' AND R.RATING > 2;","1. Request: ""where is a restaurant ... for sandwiches food with a rating above 2."" The rest of the sentence is a gloss on the rating.
+2. Place: ""mountain view"" is a city, so L.CITY_NAME = 'mountain view'. ""n.shoreline blvd."" is a street, so L.STREET_NAME = 'n.shoreline blvd.' (exact match).
+3. Food and rating: R.FOOD_TYPE = 'sandwiches' and R.RATING > 2.
+4. Assumptions: the street is stored as ""n.shoreline blvd."" with the period and no space after ""n."", matching the question's spelling. The food type is stored as ""sandwiches"" rather than ""sandwich.""
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'n.shoreline blvd.' AND L.CITY_NAME = 'mountain view' AND R.FOOD_TYPE = 'sandwiches' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4242,4101,2,885,0,2165,False,2026-10-14T20:41:09+00:00
+45,where is a bakery restaurant on simms st in san rafael with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san rafael' AND L.STREET_NAME = 'simms st' AND R.FOOD_TYPE = 'bakery' AND R.RATING > 1.7;","1. Request: ""where is a bakery restaurant on simms st in san rafael with a rating above 1.7"" (the rest is a restriction on the request, not a separate question).
+2. Place: san rafael is a city -> L.CITY_NAME = 'san rafael'; simms st is a street -> L.STREET_NAME = 'simms st' (exact match).
+3. Food and rating: bakery -> R.FOOD_TYPE = 'bakery'; ""above 1.7"" -> R.RATING > 1.7.
+4. Assumptions: the street is stored as ""simms st"" rather than ""simms street,"" and food type ""bakery"" matches the stored value exactly.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san rafael' AND L.STREET_NAME = 'simms st' AND R.FOOD_TYPE = 'bakery' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3428,3283,2,687,0,2159,False,2026-10-14T20:41:14+00:00
+46,where is a donuts restaurant on mission st in daly city with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'daly city' AND L.STREET_NAME = 'mission st' AND R.FOOD_TYPE = 'donuts' AND R.RATING > 1.7;","1. Request: ""where is a donuts restaurant on mission st in daly city with a rating above 1.7"" is the request; the ""(poorly rated or better)"" gloss is only a description of the rating scale.
+2. Place: ""daly city"" is a city, so L.CITY_NAME = 'daly city'; ""mission st"" is a street, so L.STREET_NAME = 'mission st' (exact match).
+3. Food and rating: food type is 'donuts', and ""above 1.7"" gives R.RATING > 1.7.
+4. Assumptions: the food type value is stored as 'donuts'; the street is stored as 'mission st' rather than 'mission street'; the city is stored as 'daly city'; all values are lowercase as stated.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'daly city' AND L.STREET_NAME = 'mission st' AND R.FOOD_TYPE = 'donuts' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3413,3268,2,645,0,2158,False,2026-10-14T20:41:20+00:00
+47,where is a cafe restaurant on n san pedro st in san jose with a rating above 1.8 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'n san pedro st' AND L.CITY_NAME = 'san jose' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 1.8;","1. Request: ""where is a cafe restaurant ... with a rating above 1.8"" (the rest is context).
+2. Place: ""san jose"" is a city -> L.CITY_NAME = 'san jose'; ""n san pedro st"" is a street -> L.STREET_NAME = 'n san pedro st' (exact match).
+3. Food and rating: food type 'cafe'; ""above 1.8"" -> R.RATING > 1.8.
+4. Assumptions: the street is stored as 'n san pedro st' with abbreviations as written in the question; FOOD_TYPE uses 'cafe'; the city filter applies to both the restaurant location and the street.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'n san pedro st' AND L.CITY_NAME = 'san jose' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 1.8;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3595,3426,2,717,0,2161,False,2026-10-14T20:41:25+00:00
+48,where is a japanese restaurant on broadway in burlingame with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'broadway' AND L.CITY_NAME = 'burlingame' AND R.FOOD_TYPE = 'japanese' AND R.RATING > 1.7;","1. Request: ""where is a japanese restaurant on broadway in burlingame with a rating above 1.7"" (the ""poorly rated or better"" note only glosses 1.7).
+2. Place: burlingame is a city -> L.CITY_NAME = 'burlingame'; broadway is a street -> L.STREET_NAME = 'broadway' (exact match).
+3. Food and rating: japanese -> R.FOOD_TYPE = 'japanese'; above 1.7 -> R.RATING > 1.7.
+4. Assumptions: ""broadway"" is the street name with no suffix; the city filter uses LOCATION.CITY_NAME, matching the examples; no GEOGRAPHIC join is needed.
+5. Check: selects exactly L.HOUSE_NUMBER, R.NAME; uses `>`; no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'broadway' AND L.CITY_NAME = 'burlingame' AND R.FOOD_TYPE = 'japanese' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3714,3560,2,823,0,2159,False,2026-10-14T20:41:31+00:00
+49,"where is a asian restaurant on castro st in mountain view with a rating above 2.8 (average or better), and I am still weighing curry against apple pie for a trip to the moon?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'castro st' AND L.CITY_NAME = 'mountain view' AND R.FOOD_TYPE = 'asian' AND R.RATING > 2.8;","1. Request: find an Asian restaurant on Castro St in Mountain View rated above 2.8. The curry-versus-apple-pie and moon sentences are not part of the request.
+2. Place: ""Mountain View"" is a city, so L.CITY_NAME = 'mountain view'. ""Castro st"" is a street, so L.STREET_NAME = 'castro st' (exact match).
+3. Food and rating: food type is asian, so R.FOOD_TYPE = 'asian'. ""Above 2.8"" means R.RATING > 2.8.
+4. Assumptions: the food type value is stored as 'asian', and the street is stored as 'castro st' rather than 'castro street'.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses > rather than >=, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'castro st' AND L.CITY_NAME = 'mountain view' AND R.FOOD_TYPE = 'asian' AND R.RATING > 2.8;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4066,3940,2,815,0,2176,False,2026-10-14T20:41:37+00:00
+50,give me a restaurant on mission blvd in hayward for pizza food with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'mission blvd' AND L.CITY_NAME = 'hayward' AND R.FOOD_TYPE = 'pizza' AND R.RATING > 1.7;","1. Request: ""give me a restaurant ... for pizza food with a rating above 1.7."" The rest is context.
+2. Place: ""mission blvd"" is a street (LOCATION.STREET_NAME = 'mission blvd') and ""hayward"" is a city (LOCATION.CITY_NAME = 'hayward').
+3. Food and rating: R.FOOD_TYPE = 'pizza' and R.RATING > 1.7.
+4. Assumptions: the street name is stored as 'mission blvd' exactly, with no abbreviation variants; ""poorly rated or better"" is a label for the 1.7 threshold and does not change the operator.
+5. Check: the query selects only L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'mission blvd' AND L.CITY_NAME = 'hayward' AND R.FOOD_TYPE = 'pizza' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4087,3880,2,675,0,2162,False,2026-10-14T20:41:43+00:00
+51,"give me a restaurant on san pablo ave # a in pinole for deli food with a rating above 2 (below average or better), though I am also choosing between noodles and a sandwich for a rainy picnic?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'san pablo ave' AND L.CITY_NAME = 'pinole' AND R.FOOD_TYPE = 'deli' AND R.RATING > 2;","1. Request: find a deli restaurant; the noodles-or-sandwich and rainy-picnic sentences are not part of the request.
+2. Place: ""san pablo ave"" is a street (LOCATION.STREET_NAME exact match) and ""pinole"" is a city (LOCATION.CITY_NAME).
+3. Food and rating: food type is deli (R.FOOD_TYPE = 'deli'); ""above 2 (below average or better)"" means R.RATING > 2.
+4. Assumptions: ""# a"" is a unit or address detail that the schema can't match, so I ignore it and match on street and city; ""deli"" is the stored food type value.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'san pablo ave' AND L.CITY_NAME = 'pinole' AND R.FOOD_TYPE = 'deli' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4454,4290,2,901,0,2184,False,2026-10-14T20:41:50+00:00
+52,give me a restaurant on contra costa blvd ste a in pleasant hill for pizza food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'contra costa blvd' AND L.CITY_NAME = 'pleasant hill' AND R.FOOD_TYPE = 'pizza' AND R.RATING > 2;","1. Request: ""give me a restaurant ... for pizza food with a rating above 2""; the rest is a location and rating condition.
+2. Place: ""contra costa blvd"" is a street, so L.STREET_NAME = 'contra costa blvd' (exact), and ""pleasant hill"" is a city, so L.CITY_NAME = 'pleasant hill'.
+3. Food and rating: food is pizza, so R.FOOD_TYPE = 'pizza'; ""above 2"" gives R.RATING > 2.
+4. Assumptions: ""ste a"" (suite A) is not a house number or street name, so I ignored it. Both the street and city filters apply.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'contra costa blvd' AND L.CITY_NAME = 'pleasant hill' AND R.FOOD_TYPE = 'pizza' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3952,3812,2,865,0,2165,False,2026-10-14T20:41:56+00:00
+53,"Thinking about snacks, I wonder whether a muffin or a burrito is easier to fold, give me a restaurant on ocean ave in san francisco for cafe food with a rating above 1.5 (poorly rated or better)?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'ocean ave' AND L.CITY_NAME = 'san francisco' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 1.5;","1. Request: a cafe-food restaurant on Ocean Ave in San Francisco rated above 1.5. The muffin/burrito sentence is not part of the request.
+2. Place: San Francisco is a city, so L.CITY_NAME = 'san francisco'. Ocean Ave is a street, so L.STREET_NAME = 'ocean ave' (exact match).
+3. Food and rating: ""cafe food"" maps to R.FOOD_TYPE = 'cafe'. ""Above 1.5"" maps to R.RATING > 1.5.
+4. Assumptions: the stored food type is 'cafe', and the street is stored as 'ocean ave' rather than 'ocean avenue'.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'ocean ave' AND L.CITY_NAME = 'san francisco' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 1.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4210,4080,2,879,0,2194,False,2026-10-14T20:42:03+00:00
+54,"My unrelated culinary dilemma involves choosing between cinnamon toast, vegetable pie, and a bowl of rice for a pretend celebration, while a very serious committee of stuffed animals reviews the menu. give me a restaurant on 6th st in hayward for bar food with a rating above 1.7 (poorly rated or better)? On a completely separate note, I cannot settle whether blueberry dumplings or cinnamon toast would be a better offering at a fictional festival held on the far side of a very large armchair.","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = '6th st' AND L.CITY_NAME = 'hayward' AND R.FOOD_TYPE = 'bar food' AND R.RATING > 1.7;","1. Request: Find a bar-food restaurant on 6th St in Hayward rated above 1.7. The stuffed-animal committee and the armchair festival are unrelated.
+2. Place: Hayward is a city (L.CITY_NAME = 'hayward'), and 6th St is a street (L.STREET_NAME = '6th st', exact match).
+3. Food and rating: FOOD_TYPE = 'bar food'; ""above 1.7"" gives R.RATING > 1.7.
+4. Assumptions: The street is stored as '6th st' rather than '6th street'. The food type is stored as 'bar food'. Hayward is not treated as a region.
+5. Check: The query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = '6th st' AND L.CITY_NAME = 'hayward' AND R.FOOD_TYPE = 'bar food' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3863,3733,2,799,0,2289,False,2026-10-14T20:42:09+00:00
+55,give me a donuts restaurant on mission blvd in fremont with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'mission blvd' AND L.CITY_NAME = 'fremont' AND R.FOOD_TYPE = 'donuts' AND R.RATING > 1.7;","1. Request: ""give me a donuts restaurant on mission blvd in fremont with a rating above 1.7"" (the rest is filler).
+2. Place: fremont is a city and mission blvd is a street, so L.CITY_NAME = 'fremont' and L.STREET_NAME = 'mission blvd' (exact match).
+3. Food and rating: R.FOOD_TYPE = 'donuts' and R.RATING > 1.7.
+4. Assumptions: the food type is stored as 'donuts' rather than 'donut', and the street is stored as 'mission blvd' rather than 'mission boulevard'.
+5. Check: the query selects only L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'mission blvd' AND L.CITY_NAME = 'fremont' AND R.FOOD_TYPE = 'donuts' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3583,3433,2,674,0,2160,False,2026-10-14T20:42:14+00:00
+56,"My unrelated culinary dilemma involves choosing between cinnamon toast, vegetable pie, and a bowl of rice for a pretend celebration, while a very serious committee of stuffed animals reviews the menu. I keep changing my mind about whether soup or toast is better company for a compass, give me a italian restaurant on clement in san francisco with a rating above 2 (below average or better)? This also reminds me of an unrelated menu puzzle involving pumpkin biscuits, chilled soup, and an imaginary picnic where every plate must be shared with a different stuffed animal.","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'clement' AND L.CITY_NAME = 'san francisco' AND R.FOOD_TYPE = 'italian' AND R.RATING > 2;","1. Request: ""give me an italian restaurant on clement in san francisco with a rating above 2."" The cinnamon toast, soup, stuffed animal, and pumpkin biscuit sentences are unrelated.
+2. Place: ""clement"" is a street -> L.STREET_NAME = 'clement' (exact match), and ""san francisco"" is a city -> L.CITY_NAME = 'san francisco'.
+3. Food and rating: food is italian -> R.FOOD_TYPE = 'italian'; ""above 2"" -> R.RATING > 2.
+4. Assumptions: ""clement"" is the street name, not a city or region. ""Italian restaurant"" means FOOD_TYPE 'italian'. ""Below average or better"" is the scale description, so the condition is strictly greater than 2.
+5. Check: the query selects exactly L.HOUSE_NUMBER, R.NAME, uses > (not >=), and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'clement' AND L.CITY_NAME = 'san francisco' AND R.FOOD_TYPE = 'italian' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4105,3949,2,885,0,2310,False,2026-10-14T20:42:21+00:00
+57,give me a cafe restaurant on clement in san francisco with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'clement' AND L.CITY_NAME = 'san francisco' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 2;","1. Request: ""a cafe restaurant on clement in san francisco with a rating above 2"" is the request; ""cafe restaurant"" gives the food type.
+2. Place: ""clement"" is a street -> L.STREET_NAME = 'clement' (exact), and ""san francisco"" is a city -> L.CITY_NAME = 'san francisco'.
+3. Food and rating: food type 'cafe'; ""above 2"" -> R.RATING > 2.
+4. Assumptions: ""cafe"" is stored as FOOD_TYPE = 'cafe'; ""clement"" is the street name exactly as stored; the city filter uses LOCATION.CITY_NAME, which matches the restaurant's city.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'clement' AND L.CITY_NAME = 'san francisco' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3884,3746,2,800,0,2153,False,2026-10-14T20:42:27+00:00
+58,"A very long menu debate has occupied my afternoon: should a picnic feature warm noodles, cold muffins, or an elaborate tower of crackers, and would any of them pair well with a map of imaginary islands? give me a mexican restaurant on clayton rd apt 7 in concord with a rating above 1.7 (poorly rated or better)? Separately, I am still deciding whether a basket of roasted chickpeas, a stack of pear pancakes, or a bowl of noodles would make the most sensible snack for a journey that exists only on a kitchen calendar.","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'clayton rd' AND L.CITY_NAME = 'concord' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 1.7;","1. Request: find a Mexican restaurant on Clayton Rd in Concord with a rating above 1.7. The menu and calendar-snack sentences are unrelated.
+2. Place: ""Clayton Rd"" is a street, so L.STREET_NAME = 'clayton rd' (exact), and ""Concord"" is a city, so L.CITY_NAME = 'concord'.
+3. Food and rating: food type is mexican, and ""above 1.7"" means R.RATING > 1.7.
+4. Assumptions: ""apt 7"" is a unit number the schema doesn't store, so I ignore it and return the building's HOUSE_NUMBER. Text values are lowercase as stated.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'clayton rd' AND L.CITY_NAME = 'concord' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),5193,5064,2,901,0,2304,False,2026-10-14T20:42:34+00:00
+59,give me a continental restaurant on south market st in san jose with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san jose' AND L.STREET_NAME = 'south market st' AND R.FOOD_TYPE = 'continental' AND R.RATING > 2;","1. Request: find a continental restaurant with rating above 2. The ""while I..."" style sentences are not part of the request, and the parenthetical ""below average or better"" is only a gloss on the threshold.
+2. Place: ""san jose"" is a city, so L.CITY_NAME = 'san jose'. ""south market st"" is a street, so L.STREET_NAME = 'south market st' (exact match).
+3. Food and rating: FOOD_TYPE = 'continental'; ""above 2"" gives R.RATING > 2.
+4. Assumptions: the street is stored as 'south market st' exactly, and LOCATION.CITY_NAME holds 'san jose'. No region or GEOGRAPHIC join is needed.
+5. Check: selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san jose' AND L.STREET_NAME = 'south market st' AND R.FOOD_TYPE = 'continental' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4591,4444,2,1001,0,2152,False,2026-10-14T20:42:40+00:00
+60,"where are some restaurants for mexican food on ave. in mill valley with a rating above 2 (below average or better), while I wonder if dumplings or pancakes could help me find my misplaced umbrella?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'mill valley' AND L.STREET_NAME LIKE '%ave%' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 2;","1. Request: ""where are some restaurants for mexican food on ave. in mill valley with a rating above 2."" The dumplings/pancakes/umbrella sentence is not part of the request.
+2. Place: ""mill valley"" is a city, so L.CITY_NAME = 'mill valley'. ""ave."" is a street type, not a street name, so I match it with LIKE.
+3. Food and rating: food type is mexican, and ""above 2"" means R.RATING > 2.
+4. Assumptions: ""ave."" means any street with ""ave"" in its name, since no specific street name was given. The sentence about dumplings and pancakes is ignored.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'mill valley' AND L.STREET_NAME LIKE '%ave%' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),6750,6597,2,1422,0,2184,False,2026-10-14T20:42:49+00:00
+61,"I cannot decide whether pasta belongs in a lunchbox or a flowerpot, where are some restaurants for chinese food on grand ave in south san francisco with a rating above 1.7 (poorly rated or better)?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'grand ave' AND L.CITY_NAME = 'south san francisco' AND R.FOOD_TYPE = 'chinese' AND R.RATING > 1.7;","1. Request: ""some restaurants for chinese food on grand ave in south san francisco with a rating above 1.7""; the pasta sentence is ignored.
+2. Place: ""south san francisco"" is a city (L.CITY_NAME = 'south san francisco'), and ""grand ave"" is a street (L.STREET_NAME = 'grand ave', exact match).
+3. Food and rating: food is chinese (R.FOOD_TYPE = 'chinese'), and ""above 1.7"" means R.RATING > 1.7.
+4. Assumptions: the street is stored as 'grand ave' rather than 'grand avenue', and the city filter is applied with the street filter because a street name may repeat across cities.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'grand ave' AND L.CITY_NAME = 'south san francisco' AND R.FOOD_TYPE = 'chinese' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3872,3710,2,776,0,2192,False,2026-10-14T20:42:55+00:00
+62,"I am still deciding whether a taco or a bowl of cereal suits a rainy day, where are some restaurants for mexican food on mill st in ben lomond with a rating above 2 (below average or better)?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'ben lomond' AND L.STREET_NAME = 'mill st' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 2;","1. Request: Find mexican restaurants on mill st in ben lomond rated above 2. The taco-or-cereal sentence is not part of the request.
+2. Place: ""ben lomond"" is a city, so L.CITY_NAME = 'ben lomond'. ""mill st"" is a street, so L.STREET_NAME = 'mill st' (exact match).
+3. Food and rating: R.FOOD_TYPE = 'mexican'. ""above 2"" means R.RATING > 2.
+4. Assumptions: The street is stored as 'mill st' rather than 'mill street'. Ben lomond is stored as a city name in LOCATION. The ""below average or better"" note is a gloss, so the strict > 2 condition applies. No GEOGRAPHIC join is needed because the place is a city and a street.
+5. Check: The query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'ben lomond' AND L.STREET_NAME = 'mill st' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4698,4543,2,1039,0,2185,False,2026-10-14T20:43:01+00:00
+63,"I am still deciding whether a taco or a bowl of cereal suits a rainy day, where are some restaurants for dessert food on candelero dr in walnut creek with a rating above 1.5 (poorly rated or better)?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'candelero dr' AND L.CITY_NAME = 'walnut creek' AND R.FOOD_TYPE = 'dessert' AND R.RATING > 1.5;","1. Request: find dessert restaurants on candelero dr with a rating above 1.5. The taco-or-cereal sentence is not part of the request.
+2. Place: candelero dr is a street (LOCATION.STREET_NAME = 'candelero dr', exact match), and walnut creek is a city (LOCATION.CITY_NAME = 'walnut creek').
+3. Food and rating: food type is dessert (R.FOOD_TYPE = 'dessert'), and ""above 1.5"" gives R.RATING > 1.5.
+4. Assumptions: ""dessert food"" maps to the literal food type 'dessert'; the street and city are matched on LOCATION, as in the examples; no DISTINCT, ORDER BY, or LIMIT is needed.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and includes no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'candelero dr' AND L.CITY_NAME = 'walnut creek' AND R.FOOD_TYPE = 'dessert' AND R.RATING > 1.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3947,3795,2,849,0,2192,False,2026-10-14T20:43:07+00:00
+64,where are some restaurants for american food on exp/riveroaks in san jose with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'exp/riveroaks' AND L.CITY_NAME = 'san jose' AND R.FOOD_TYPE = 'american' AND R.RATING > 2;","1. Request: ""where are some restaurants for american food ... with a rating above 2."" The sentence about the location and the rating is the request; the rest is filler.
+2. Place: ""exp/riveroaks"" is a street and ""san jose"" is a city, so L.STREET_NAME = 'exp/riveroaks' (exact) and L.CITY_NAME = 'san jose'.
+3. Food and rating: food is american, so R.FOOD_TYPE = 'american'; ""above 2"" gives R.RATING > 2.
+4. Assumptions: ""exp/riveroaks"" is the exact stored street name; ""american"" is the stored food type value; the city filter uses LOCATION.CITY_NAME, as in the examples.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'exp/riveroaks' AND L.CITY_NAME = 'san jose' AND R.FOOD_TYPE = 'american' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),5246,5090,2,1112,0,2158,False,2026-10-14T20:43:14+00:00
+65,What is the lifes greates illusion?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE 1 = 0;","1. Request: None. The only sentence is ""What is the lifes greates illusion?"", which is not a restaurant question.
+2. Place: No place is named, so there is no city, region, or street filter.
+3. Food and rating: No food type or rating condition is given.
+4. Assumptions: The question is unrelated to the restaurant database, so I can't answer it with a query. I'm returning an empty result set rather than inventing filters.
+5. Check: The query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no comparisons that need > or >=.
+
+The query returns no rows. If you meant a restaurant question, please send it and I'll write the query.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE 1 = 0;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3811,3652,2,716,0,2132,False,2026-10-14T20:43:20+00:00
+66,give me some restaurants in the monterey with a rating above 4.5 (excellent or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'monterey' AND R.RATING > 4.5;","1. Request: ""give me some restaurants in the monterey with a rating above 4.5""; the ""(excellent or better)"" part is just a rating label.
+2. Place: ""monterey"" is treated as a city, so L.CITY_NAME = 'monterey'.
+3. Food and rating: no food type is given, so none is filtered; ""above 4.5"" -> R.RATING > 4.5.
+4. Assumptions: ""the monterey"" refers to the city of Monterey, not the Monterey County or region; no food type was requested.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'monterey' AND R.RATING > 4.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),5203,5010,2,943,0,2150,False,2026-10-14T20:43:27+00:00
+67,give me some restaurants in the sacramento area with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'sacramento area' AND R.RATING > 2;","1. Request: ""give me some restaurants in the sacramento area with a rating above 2"" is the request.
+2. Place: ""sacramento area"" is treated as a region, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'sacramento area'.
+3. Food and rating: no food type is specified; ""above 2"" gives R.RATING > 2.
+4. Assumptions: ""sacramento area"" matches a REGION value exactly, in lowercase. The parenthetical ""(below average or better)"" only explains the rating scale. No food type, street, or result limit is required.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'sacramento area' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4884,4753,2,1041,0,2149,False,2026-10-14T20:43:34+00:00
+68,give me some restaurants in the lake tahoe with a rating above 2.3 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'lake tahoe' AND R.RATING > 2.3;","1. Request: ""give me some restaurants in the lake tahoe with a rating above 2.3"" (the parenthetical gloss is not a filter).
+2. Place: ""lake tahoe"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'lake tahoe'.
+3. Food and rating: no food type is specified; ""above 2.3"" -> R.RATING > 2.3.
+4. Assumptions: the region value is stored as 'lake tahoe' in lowercase; a restaurant's location is given by its LOCATION row, so each matching restaurant may appear once per location.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'lake tahoe' AND R.RATING > 2.3;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3968,3783,2,812,0,2152,False,2026-10-14T20:43:40+00:00
+69,"give me some restaurants in the napa valley with a rating above 2 (below average or better), and whether a taco or a bowl of cereal would make a better hat?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley' AND R.RATING > 2;","1. Request: ""give me some restaurants in the napa valley with a rating above 2""; the taco-or-cereal ""hat"" sentence is not a database request.
+2. Place: ""napa valley"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'napa valley'.
+3. Food and rating: no food type is specified, so none is filtered; ""above 2"" gives R.RATING > 2.
+4. Assumptions: ""below average or better"" is a gloss on ""above 2"" and doesn't change the condition; the taco/cereal question can't be answered from this database.
+5. Check: selects exactly L.HOUSE_NUMBER, R.NAME; uses `>`; no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4604,4467,2,941,0,2169,False,2026-10-14T20:43:47+00:00
+70,where can we find a restaurant on buchanan in seaside ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'buchanan' AND L.CITY_NAME = 'seaside';","1. **Request:** ""where can we find a restaurant on buchanan in seaside"" (the rest of the message is not part of the request).
+2. **Place:** ""seaside"" is a city, so `L.CITY_NAME = 'seaside'`; ""buchanan"" is a street, so `L.STREET_NAME = 'buchanan'` (exact match).
+3. **Food and rating:** None specified, so no food or rating conditions.
+4. **Assumptions:** ""seaside"" is a city name in LOCATION.CITY_NAME, not a region; ""buchanan"" is the full street name; all values are lowercase as stated.
+5. **Check:** Selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and joins RESTAURANT to LOCATION on the ID.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'buchanan' AND L.CITY_NAME = 'seaside';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3308,3174,2,679,0,2140,False,2026-10-14T20:43:52+00:00
+71,"I cannot decide whether pasta belongs in a lunchbox or a flowerpot, where can we find a restaurant on alvarado blvd in banta ?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'alvarado blvd' AND L.CITY_NAME = 'banta';","1. Request: ""where can we find a restaurant on alvarado blvd in banta""; the lunchbox-or-flowerpot sentence is ignored.
+2. Place: ""alvarado blvd"" is a street (LOCATION.STREET_NAME = 'alvarado blvd') and ""banta"" is a city (LOCATION.CITY_NAME = 'banta').
+3. Food and rating: none specified, so no food or rating conditions.
+4. Assumptions: ""banta"" refers to the city, not a region, and ""alvarado blvd"" is stored exactly as written, in lowercase.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'alvarado blvd' AND L.CITY_NAME = 'banta';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3527,3394,2,728,0,2171,False,2026-10-14T20:43:58+00:00
+72,"where can we find a restaurant on town and country vlg in campbell, while the menu leaves me wondering whether toast or soup can teach a compass to sing?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'town and country vlg' AND L.CITY_NAME = 'campbell';","1. Request: ""where can we find a restaurant on town and country vlg in campbell"" (the toast-and-compass sentence is unrelated).
+2. Place: ""town and country vlg"" is a street -> L.STREET_NAME = 'town and country vlg' (exact), and ""campbell"" is a city -> L.CITY_NAME = 'campbell'.
+3. Food and rating: none specified, so no filter on R.FOOD_TYPE or R.RATING.
+4. Assumptions: the street name is stored exactly as 'town and country vlg' (with ""vlg"" abbreviated, not ""village""), and the city is stored as 'campbell'.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no rating comparison.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'town and country vlg' AND L.CITY_NAME = 'campbell';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4866,4630,2,792,0,2169,False,2026-10-14T20:44:05+00:00
+73,"While comparing dumplings with pancakes for an imaginary picnic, where can we find a restaurant on laurie meadows dr in orinda ?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'laurie meadows dr' AND L.CITY_NAME = 'orinda';","1. Request: ""where can we find a restaurant on laurie meadows dr in orinda"" is the request. The dumplings and pancakes sentence is unrelated.
+2. Place: ""laurie meadows dr"" is a street, so match LOCATION.STREET_NAME exactly. ""orinda"" is a city, so match LOCATION.CITY_NAME.
+3. Food and rating: neither is specified, so there is no food or rating filter.
+4. Assumptions: the street is stored as ""laurie meadows dr"" (abbreviated as written), and the city is stored as ""orinda"".
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'laurie meadows dr' AND L.CITY_NAME = 'orinda';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4153,3960,2,828,0,2167,False,2026-10-14T20:44:11+00:00
+74,where can we find a restaurant on allston way in pacheco ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'allston way' AND L.CITY_NAME = 'pacheco';","1. Request: ""where can we find a restaurant on allston way in pacheco"" is the restaurant request; the rest is filler.
+2. Place: ""pacheco"" is a city (L.CITY_NAME = 'pacheco'), and ""allston way"" is a street (L.STREET_NAME = 'allston way', exact match).
+3. Food and rating: none specified, so no filters on FOOD_TYPE or RATING.
+4. Assumptions: the street and city values are stored in lowercase as stated, and ""allston way"" is the full street name with no abbreviation.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no inequality conditions.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'allston way' AND L.CITY_NAME = 'pacheco';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4138,3900,2,718,0,2140,False,2026-10-14T20:44:18+00:00
+75,"On an unrelated menu question, I am torn between curry and apple pie, where can we find some restaurants on e capitol expy # 104 in sonora ?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'e capitol expy' AND L.CITY_NAME = 'sonora';","1. **Request:** The restaurant request is ""where can we find some restaurants on e capitol expy # 104 in sonora""; the curry and apple pie sentence is the menu decision.
+2. **Place:** ""e capitol expy"" is a street (exact match on LOCATION.STREET_NAME), and ""sonora"" is a city (LOCATION.CITY_NAME).
+3. **Food and rating:** No food type filter, since the user asks for restaurants on the street rather than a particular cuisine; no rating condition.
+4. **Assumptions:** ""# 104"" is treated as an address or unit reference, not a house number filter, because the user asks for restaurants on the street. The database stores the street as ""e capitol expy"" without the ""#"" or the number. Curry and apple pie are not filters.
+5. **Check:** The query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and uses no comparison operators that need checking.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'e capitol expy' AND L.CITY_NAME = 'sonora';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),6453,6260,2,1351,0,2169,False,2026-10-14T20:44:26+00:00
+76,where can we find some restaurants on e. morehead in campbell ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'e. morehead' AND L.CITY_NAME = 'campbell';","1. Request: ""where can we find some restaurants on e. morehead in campbell"" is the restaurant request; the rest is filler.
+2. Place: ""campbell"" is a city (L.CITY_NAME = 'campbell'), and ""e. morehead"" is a street (L.STREET_NAME = 'e. morehead', exact match).
+3. Food and rating: none specified, so no food or rating filter.
+4. Assumptions: the street is stored as 'e. morehead' (not 'east morehead'), and the city is stored as 'campbell'.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no rating comparison.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'e. morehead' AND L.CITY_NAME = 'campbell';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3874,3728,2,805,0,2141,False,2026-10-14T20:44:32+00:00
+77,where can we find some restaurants on w 25th ave in los altos ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'w 25th ave' AND L.CITY_NAME = 'los altos';","1. Request: ""where can we find some restaurants on w 25th ave"" is the restaurant request; the rest is filler.
+2. Place: ""w 25th ave"" is a street, so filter LOCATION.STREET_NAME = 'w 25th ave' exactly. ""los altos"" is a city, so filter L.CITY_NAME = 'los altos'.
+3. Food and rating: none specified, so no conditions on FOOD_TYPE or RATING.
+4. Assumptions: the street is stored as 'w 25th ave' (not 'west 25th avenue'), and the city filter is applied to LOCATION.CITY_NAME.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, LIMIT, or comparison operators needed.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'w 25th ave' AND L.CITY_NAME = 'los altos';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3156,3013,2,620,0,2142,False,2026-10-14T20:44:38+00:00
+78,where can we find some restaurants on alvarado blvd in menlo park ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'alvarado blvd' AND L.CITY_NAME = 'menlo park';","1. Request: ""where can we find some restaurants on alvarado blvd in menlo park"" (the restaurant request is the whole question).
+2. Place: ""menlo park"" is a city, so L.CITY_NAME = 'menlo park'; ""alvarado blvd"" is a street, so L.STREET_NAME = 'alvarado blvd' (exact match).
+3. Food and rating: none specified, so no filter on FOOD_TYPE or RATING.
+4. Assumptions: the street name is stored as 'alvarado blvd' in lowercase, exactly as the user wrote it; the location's city is the same as the city filter.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no rating comparison.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'alvarado blvd' AND L.CITY_NAME = 'menlo park';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3253,3083,2,607,0,2144,False,2026-10-14T20:44:43+00:00
+79,"A very long menu debate has occupied my afternoon: should a picnic feature warm noodles, cold muffins, or an elaborate tower of crackers, and would any of them pair well with a map of imaginary islands? where can we find some restaurants on scotts valley dr in concord ? Meanwhile, a hypothetical lunchbox committee is debating lentil pie, roasted pears, and tiny omelets, with no agreement about which one would travel best across an imaginary ocean.","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'scotts valley dr' AND L.CITY_NAME = 'concord';","1. Request: restaurants on Scotts Valley Dr in Concord. The picnic, islands, and lunchbox sentences are unrelated.
+2. Place: Concord is a city (L.CITY_NAME = 'concord'), and Scotts Valley Dr is an exact street match (L.STREET_NAME = 'scotts valley dr').
+3. Food and rating: none specified, so no filter on FOOD_TYPE or RATING.
+4. Assumptions: ""Concord"" is the city, not a region. Values are lowercase as stated. The street is ""scotts valley dr"" exactly as written, with no abbreviation expansion.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, or LIMIT, and uses the required joins.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.STREET_NAME = 'scotts valley dr' AND L.CITY_NAME = 'concord';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3960,3834,2,666,0,2275,False,2026-10-14T20:44:50+00:00
+80,what is the best basque in the bay area ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'basque' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN GEOGRAPHIC G2 ON R2.CITY_NAME = G2.CITY_NAME WHERE G2.REGION = 'bay area' AND R2.FOOD_TYPE = 'basque');","1. Request: ""what is the best basque in the bay area"" is the restaurant request; the rest is filler.
+2. Place: ""bay area"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: food type is 'basque'. ""Best"" means R.RATING equal to the maximum rating among basque restaurants in the bay area.
+4. Assumptions: the region is stored as 'bay area' in GEOGRAPHIC.REGION; the maximum subquery uses the same region and food filters; ties return all top-rated restaurants.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and the subquery applies the same filters as the outer query.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'basque' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN GEOGRAPHIC G2 ON R2.CITY_NAME = G2.CITY_NAME WHERE G2.REGION = 'bay area' AND R2.FOOD_TYPE = 'basque');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4603,4445,2,1079,0,2133,False,2026-10-14T20:44:56+00:00
+81,"I cannot decide whether pasta belongs in a lunchbox or a flowerpot, what is the best lamb in the northern california ?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'northern california' AND R.FOOD_TYPE = 'lamb' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN GEOGRAPHIC G2 ON R2.CITY_NAME = G2.CITY_NAME WHERE G2.REGION = 'northern california' AND R2.FOOD_TYPE = 'lamb');","1. Request: ""what is the best lamb in the northern california"" is the restaurant request; the pasta sentence is unrelated.
+2. Place: ""northern california"" is a region, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'northern california'.
+3. Food and rating: food type is lamb; ""best"" means R.RATING equal to the maximum rating of lamb restaurants in the same region.
+4. Assumptions: the region is stored as 'northern california'; the pasta sentence is ignored; there may be ties, so all top-rated matches are returned.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and the subquery applies the same region and food filters.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'northern california' AND R.FOOD_TYPE = 'lamb' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN GEOGRAPHIC G2 ON R2.CITY_NAME = G2.CITY_NAME WHERE G2.REGION = 'northern california' AND R2.FOOD_TYPE = 'lamb');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4499,4340,2,986,0,2163,False,2026-10-14T20:45:03+00:00
+82,what is the best hoffbrau in the sacramento area ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'sacramento' AND R.NAME LIKE '%hoffbrau%' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'sacramento' AND R2.NAME LIKE '%hoffbrau%');","1. Request: ""best hoffbrau"" is the restaurant request; ""the sacramento area"" is the location.
+2. Place: ""sacramento"" is treated as a city, so L.CITY_NAME = 'sacramento'.
+3. Food and rating: ""hoffbrau"" is a restaurant name, not a cuisine, so match R.NAME with LIKE. ""Best"" means R.RATING equals the maximum rating of matching restaurants in the same city.
+4. Assumptions: ""area"" means the city rather than a GEOGRAPHIC region; hoffbrau appears in the name, not FOOD_TYPE; LIKE is acceptable since names are lowercase.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY or LIMIT, and the subquery applies the same filters as the outer query.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'sacramento' AND R.NAME LIKE '%hoffbrau%' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN LOCATION L2 ON R2.ID = L2.RESTAURANT_ID WHERE L2.CITY_NAME = 'sacramento' AND R2.NAME LIKE '%hoffbrau%');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),6393,6243,2,1425,0,2139,False,2026-10-14T20:45:11+00:00
+83,"I cannot decide whether pasta belongs in a lunchbox or a flowerpot, what is the best yogurt in the yosemite and mono lake area ?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'yosemite and mono lake area' AND R.FOOD_TYPE = 'yogurt' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN GEOGRAPHIC G2 ON R2.CITY_NAME = G2.CITY_NAME WHERE G2.REGION = 'yosemite and mono lake area' AND R2.FOOD_TYPE = 'yogurt');","1. Request: ""best yogurt in the yosemite and mono lake area."" The pasta lunchbox/flowerpot sentence is not part of the request.
+2. Place: ""yosemite and mono lake area"" is a region, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION.
+3. Food and rating: food type is yogurt, and ""best"" means R.RATING equals the maximum rating of yogurt restaurants in that region.
+4. Assumptions: the region is stored as 'yosemite and mono lake area'; the food type is stored as 'yogurt'; the region text is lowercase, as stated.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY or LIMIT, and the subquery applies the same region and food filters.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'yosemite and mono lake area' AND R.FOOD_TYPE = 'yogurt' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN GEOGRAPHIC G2 ON R2.CITY_NAME = G2.CITY_NAME WHERE G2.REGION = 'yosemite and mono lake area' AND R2.FOOD_TYPE = 'yogurt');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),5705,5585,2,1283,0,2171,False,2026-10-14T20:45:19+00:00
+84,what is the best brunch in the napa valley ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley' AND R.FOOD_TYPE = 'brunch' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN GEOGRAPHIC G2 ON R2.CITY_NAME = G2.CITY_NAME WHERE G2.REGION = 'napa valley' AND R2.FOOD_TYPE = 'brunch');","1. Request: ""what is the best brunch"" is the restaurant request; ""in the napa valley"" is its location.
+2. Place: ""napa valley"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'napa valley'.
+3. Food and rating: food type is 'brunch', and ""best"" means R.RATING equal to the maximum rating of brunch restaurants in the same region.
+4. Assumptions: brunch is stored as FOOD_TYPE = 'brunch', and the region value is 'napa valley' as given. The maximum-rating subquery joins only RESTAURANT and GEOGRAPHIC because it needs no house or street data.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no rating inequality, so "">"" versus "">="" does not apply.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley' AND R.FOOD_TYPE = 'brunch' AND R.RATING = (SELECT MAX(R2.RATING) FROM RESTAURANT R2 JOIN GEOGRAPHIC G2 ON R2.CITY_NAME = G2.CITY_NAME WHERE G2.REGION = 'napa valley' AND R2.FOOD_TYPE = 'brunch');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),5099,4978,2,1148,0,2135,False,2026-10-14T20:45:26+00:00
+85,give me some restaurants in the los angeles area ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'los angeles';","1. Request: ""give me some restaurants in the los angeles area"" is the request; there are no food or rating conditions.
+2. Place: ""los angeles"" is treated as a city, so L.CITY_NAME = 'los angeles'.
+3. Food and rating: none specified, so no filters on FOOD_TYPE or RATING.
+4. Assumptions: ""area"" is read as the city itself, not the wider county or region. Values are lowercase as the schema requires.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, and uses no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'los angeles';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3244,3065,2,594,0,2136,False,2026-10-14T20:45:32+00:00
+86,give me some restaurants in the bay area ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area';","1. Request: ""give me some restaurants in the bay area"" is the restaurant request; there are no food or rating conditions.
+2. Place: ""bay area"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: no food type and no rating condition, so neither filter applies.
+4. Assumptions: the region is stored as 'bay area' in lowercase, and ""some restaurants"" means no limit on how many are returned.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no comparison operators because no rating filter is needed.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4706,4552,2,680,0,2134,False,2026-10-14T20:45:38+00:00
+87,give me some restaurants in the unknown ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'the unknown';","1. Request: ""give me some restaurants in the unknown"" is the whole request; no food or rating is mentioned.
+2. Place: ""the unknown"" is not a recognizable city, region, or street, so I treat it as a city name: L.CITY_NAME = 'the unknown'.
+3. Food and rating: none specified, so no filters on food type or rating.
+4. Assumptions: ""the unknown"" is a city name in lowercase; if it is meant as a region or street, the query would need a different filter.
+5. Check: selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'the unknown';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3950,3813,2,663,0,2134,False,2026-10-14T20:45:45+00:00
+88,give me some restaurants in the northern california ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'northern california';","1. Request: ""give me some restaurants in the northern california"" is the request; the rest is just phrasing.
+2. Place: ""northern california"" is a region, not a city or street, so join GEOGRAPHIC on R.CITY_NAME and match G.REGION = 'northern california'.
+3. Food and rating: no food type and no rating condition, so no filters on either.
+4. Assumptions: the REGION value is stored as 'northern california' in lowercase, and the question wants any restaurant in that region, not a ranked subset.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no rating comparison.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'northern california';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3557,3432,2,652,0,2134,False,2026-10-14T20:45:51+00:00
+89,"give me some restaurants in the sacramento area, and I have not settled whether pasta belongs in a lunchbox or a flowerpot?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'sacramento';","1. Request: ""give me some restaurants in the sacramento area."" The lunchbox/flowerpot sentence is not part of the request.
+2. Place: ""sacramento"" is a city, so L.CITY_NAME = 'sacramento'.
+3. Food and rating: none specified, so no food or rating filter.
+4. Assumptions: ""area"" means the city of Sacramento, not a wider region. I did not treat ""pasta"" as a food-type filter, since the question only asks about where it belongs.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, has no DISTINCT, ORDER BY, or LIMIT, and uses lowercase values.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'sacramento';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4279,4145,2,765,0,2164,False,2026-10-14T20:45:57+00:00
+90,where can i find a restaurant in the napa valley ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley';","1. Request: ""where can i find a restaurant"" is the request. ""in the napa valley"" gives the place, and the rest is unrelated.
+2. Place: ""napa valley"" is a region, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'napa valley'.
+3. Food and rating: none specified, so no food or rating filter.
+4. Assumptions: ""napa valley"" is stored as a lowercase region value, and every restaurant in that region should be returned.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3547,3380,2,687,0,2137,False,2026-10-14T20:46:03+00:00
+91,where can i find a restaurant in the sacramento area ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'sacramento';","1. Request: ""where can I find a restaurant"" is the request. The rest of the sentence is just context.
+2. Place: ""sacramento area"" is treated as the city of sacramento, so L.CITY_NAME = 'sacramento'.
+3. Food and rating: none specified, so no food or rating filter.
+4. Assumptions: ""area"" is read as the city, not a region, since no region name is given. Text is lowercase, so 'sacramento' is used.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'sacramento';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3126,2977,2,490,0,2138,False,2026-10-14T20:46:08+00:00
+92,where can i find a restaurant in the monterey ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'monterey';","1. Request: ""where can i find a restaurant in the monterey ?"" is the restaurant request; the rest is the question's phrasing.
+2. Place: ""monterey"" is treated as a city -> L.CITY_NAME = 'monterey'.
+3. Food and rating: no food type or rating condition is given, so neither filter applies.
+4. Assumptions: ""monterey"" refers to the city, not the region or a street, and all restaurants in that city qualify.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, and uses no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'monterey';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4039,3912,2,657,0,2136,False,2026-10-14T20:46:15+00:00
+93,where can i find a restaurant in the lake tahoe ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'lake tahoe';","1. Request: ""where can i find a restaurant"" is the request; ""in the lake tahoe"" gives the location.
+2. Place: ""lake tahoe"" is a region (a basin spanning several towns), not a single city or street, so G.REGION = 'lake tahoe' via a join on R.CITY_NAME.
+3. Food and rating: no food type or rating is given, so neither condition applies.
+4. Assumptions: ""lake tahoe"" is stored as a REGION value, all text is lowercase, and the request asks for any restaurant in the area.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no rating comparison.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'lake tahoe';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3826,3698,2,764,0,2139,False,2026-10-14T20:46:21+00:00
+94,where can i find a restaurant in the yosemite and mono lake area ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION IN ('yosemite', 'mono lake');","1. Request: ""where can i find a restaurant"" is the request; ""yosemite and mono lake area"" is the location.
+2. Place: ""yosemite and mono lake"" are treated as two regions, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION IN ('yosemite', 'mono lake').
+3. Food and rating: no food type and no rating condition are given.
+4. Assumptions: ""yosemite"" and ""mono lake"" are region names in GEOGRAPHIC.REGION, not city names; ""area"" means both regions together.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, has no DISTINCT, ORDER BY, or LIMIT, and uses lowercase values.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION IN ('yosemite', 'mono lake');",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4935,4785,2,992,0,2143,False,2026-10-14T20:46:28+00:00
+95,what are some places in the bay area for ethiopian food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'ethiopian' AND R.RATING > 2;","1. Request: ""places in the bay area for ethiopian food with a rating above 2""; the ""Question"" wording about the rating scale is context.
+2. Place: ""bay area"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: R.FOOD_TYPE = 'ethiopian' and R.RATING > 2.
+4. Assumptions: the region value is stored as 'bay area' in lowercase; ""above 2"" means strictly greater than 2, as the rule requires.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'ethiopian' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3467,3323,2,681,0,2151,False,2026-10-14T20:46:33+00:00
+96,"Thinking about snacks, I wonder whether a muffin or a burrito is easier to fold, what are some places in the los angeles area for indian food with a rating above 3 (good or better)?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'los angeles' AND R.FOOD_TYPE = 'indian' AND R.RATING > 3;","1. Request: The restaurant request is for Indian food in the Los Angeles area rated above 3. The muffin-versus-burrito sentence is unrelated.
+2. Place: ""Los Angeles area"" reads as a region, so join GEOGRAPHIC on RESTAURANT.CITY_NAME and use G.REGION = 'los angeles'.
+3. Food and rating: Food is 'indian'. ""Above 3"" maps to R.RATING > 3.
+4. Assumptions: ""Los Angeles area"" means the region 'los angeles' rather than the single city 'los angeles'. The region value is stored as 'los angeles' in lowercase.
+5. Check: The query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'los angeles' AND R.FOOD_TYPE = 'indian' AND R.RATING > 3;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4366,4230,2,935,0,2180,False,2026-10-14T20:46:40+00:00
+97,what are some places in the bay area for moroccan food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'moroccan' AND R.RATING > 2;","1. Request: ""places ... for moroccan food with a rating above 2"" (the napa-style sentence about the question is not part of the request).
+2. Place: ""bay area"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and use G.REGION = 'bay area'.
+3. Food and rating: food is 'moroccan', and ""above 2"" means R.RATING > 2.
+4. Assumptions: the region is stored as 'bay area' in lowercase, and ""below average or better"" is just the parenthetical gloss on the threshold, not a separate condition.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'moroccan' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4160,4039,2,884,0,2150,False,2026-10-14T20:46:46+00:00
+98,what are some places in the northern california for italian food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'northern california' AND R.FOOD_TYPE = 'italian' AND R.RATING > 2;","1. Request: ""places ... for italian food with a rating above 2"" (the rest is framing).
+2. Place: ""northern california"" is a region, not a city or street, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION.
+3. Food and rating: R.FOOD_TYPE = 'italian' and R.RATING > 2, since ""above 2"" means strictly greater than 2.
+4. Assumptions: the REGION value is stored as 'northern california' in lowercase, and the RATING column is numeric.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'northern california' AND R.FOOD_TYPE = 'italian' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3610,3462,2,809,0,2148,False,2026-10-14T20:46:52+00:00
+99,what are some places in the monterey for bar food with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'monterey' AND R.FOOD_TYPE = 'bar food' AND R.RATING > 1.7;","1. Request: ""what are some places ... for bar food ... with a rating above 1.7"" (the rest is filler).
+2. Place: ""the monterey"" is treated as a region, matching the ""the napa valley"" example -> G.REGION = 'monterey' joined on R.CITY_NAME.
+3. Food and rating: bar food -> R.FOOD_TYPE = 'bar food'; ""above 1.7"" -> R.RATING > 1.7.
+4. Assumptions: ""monterey"" is a region rather than the city; the food type value is 'bar food'; the parenthetical ""poorly rated or better"" is explanatory only.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'monterey' AND R.FOOD_TYPE = 'bar food' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),5311,5123,2,1038,0,2153,False,2026-10-14T20:47:00+00:00
+100,give me a restaurant in the monterey for swiss food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'monterey' AND R.FOOD_TYPE = 'swiss' AND R.RATING > 2;","1. Request: ""give me a restaurant ... for swiss food with a rating above 2""; the ""give me"" wording is only framing.
+2. Place: ""the monterey"" reads like a region (as in ""the napa valley""), so join GEOGRAPHIC and use G.REGION = 'monterey'.
+3. Food and rating: R.FOOD_TYPE = 'swiss' and R.RATING > 2 (strictly above 2, not 2 or more).
+4. Assumptions: ""monterey"" is a region rather than the city; the question wants any matching restaurant, not only the best one; all text is lowercase as stated.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'monterey' AND R.FOOD_TYPE = 'swiss' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3508,3370,2,659,0,2152,False,2026-10-14T20:47:06+00:00
+101,give me a restaurant in the bay area for american food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'american' AND R.RATING > 2;","1. Request: ""give me a restaurant ... for american food with a rating above 2"" (the rest is filler).
+2. Place: ""bay area"" is a region, not a city -> join GEOGRAPHIC on R.CITY_NAME and use G.REGION = 'bay area'.
+3. Food and rating: food type 'american', and ""above 2"" -> R.RATING > 2.
+4. Assumptions: the region is stored as 'bay area' in lowercase; ""a restaurant"" means any matching restaurant, so the query returns all of them without LIMIT.
+5. Check: selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'american' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3066,2949,2,583,0,2150,False,2026-10-14T20:47:11+00:00
+102,"give me a restaurant in the bay area for greek food with a rating above 4.5 (excellent or better), while the menu leaves me wondering whether toast or soup can teach a compass to sing?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'greek' AND R.RATING > 4.5;","1. Request: a greek restaurant in the bay area rated above 4.5. The toast-and-compass sentence is unrelated.
+2. Place: ""bay area"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and use G.REGION = 'bay area'.
+3. Food and rating: food type 'greek', and ""above 4.5 (excellent or better)"" means R.RATING > 4.5.
+4. Assumptions: GEOGRAPHIC.REGION stores the Bay Area as 'bay area' in lowercase, and the query needs no street or city filter.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'greek' AND R.RATING > 4.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4108,3967,2,832,0,2181,False,2026-10-14T20:47:17+00:00
+103,give me a restaurant in the bay area for dinner food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.RATING > 2;","1. Request: ""give me a restaurant ... with a rating above 2."" The dinner-food and bay-area parts are the constraints.
+2. Place: ""bay area"" is a region, not a city or street, so join GEOGRAPHIC on R.CITY_NAME and use G.REGION = 'bay area'.
+3. Food and rating: ""dinner food"" is not a cuisine I can match to a FOOD_TYPE value, so I apply no food filter. ""Above 2"" gives R.RATING > 2.
+4. Assumptions: ""bay area"" is stored as the lowercase REGION value 'bay area'. ""Dinner food"" is not a specific FOOD_TYPE, so it is not filtered. Any restaurant in the region with a rating above 2 qualifies.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4641,4515,2,877,0,2152,False,2026-10-14T20:47:24+00:00
+104,give me a restaurant in the napa valley for ice cream food with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley' AND R.FOOD_TYPE = 'ice cream' AND R.RATING > 1.7;","1. Request: ""give me a restaurant ... for ice cream food with a rating above 1.7"" (the rest is filler).
+2. Place: ""napa valley"" is a region, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'napa valley'.
+3. Food and rating: food type is 'ice cream'; ""above 1.7"" means R.RATING > 1.7.
+4. Assumptions: FOOD_TYPE stores ice cream as 'ice cream' in lowercase; ""a restaurant"" means all matches, not a single one; the parenthetical ""poorly rated or better"" just restates the threshold.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley' AND R.FOOD_TYPE = 'ice cream' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4225,4070,2,805,0,2159,False,2026-10-14T20:47:30+00:00
+105,give me a latin restaurant in the bay area with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'latin' AND R.RATING > 2;","1. Request: ""a latin restaurant in the bay area with a rating above 2""; the sentence ""give me..."" frames it.
+2. Place: ""bay area"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: R.FOOD_TYPE = 'latin' and ""above 2"" means R.RATING > 2.
+4. Assumptions: ""bay area"" is stored as a region value in GEOGRAPHIC.REGION, ""latin"" is the FOOD_TYPE value, and the rating is numeric.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'latin' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4232,4067,2,817,0,2149,False,2026-10-14T20:47:37+00:00
+106,give me a dinner restaurant in the bay area with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.RATING > 2;","1. Request: ""a dinner restaurant"" with a rating above 2 in the Bay Area. The sentence about the rating scale is descriptive, and ""dinner"" is not a food type or column.
+2. Place: ""bay area"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: no food type is given (""dinner"" is a meal, not a FOOD_TYPE value), so no food filter. Rating: above 2 gives R.RATING > 2.
+4. Assumptions: ""bay area"" is stored as a REGION value in lowercase; ""dinner"" is not a filter; the parenthetical ""below average or better"" just explains the scale, so the condition is strictly greater than 2.
+5. Check: the query selects exactly L.HOUSE_NUMBER, R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4226,3948,2,870,0,2150,False,2026-10-14T20:47:43+00:00
+107,"While I debate whether soup or pie makes a better breakfast, give me a bar restaurant in the napa valley with a rating above 2 (below average or better)?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley' AND R.FOOD_TYPE = 'bar' AND R.RATING > 2;","1. Request: ""give me a bar restaurant in the napa valley with a rating above 2"" (the soup-or-pie sentence is unrelated).
+2. Place: ""napa valley"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'napa valley'.
+3. Food and rating: food type 'bar'; ""above 2"" means R.RATING > 2.
+4. Assumptions: ""bar"" is a FOOD_TYPE value, and the region is stored as 'napa valley' in lowercase.
+5. Check: selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley' AND R.FOOD_TYPE = 'bar' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4343,4175,2,908,0,2170,False,2026-10-14T20:47:50+00:00
+108,give me a bulgarian restaurant in the bay area with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'bulgarian' AND R.RATING > 2;","1. Request: ""give me a bulgarian restaurant in the bay area with a rating above 2."" The rest of the sentence is a gloss on the rating.
+2. Place: ""bay area"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: food type = 'bulgarian'; ""above 2"" means R.RATING > 2.
+4. Assumptions: ""bay area"" is stored as the lowercase value 'bay area' in GEOGRAPHIC.REGION. The parenthetical ""below average or better"" is a description of the scale, so I used the strict "">"" the question specifies.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses "">"", and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'bulgarian' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4307,4172,2,820,0,2152,False,2026-10-14T20:47:56+00:00
+109,give me a german restaurant in the bay area with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'german' AND R.RATING > 2;","1. Request: ""a german restaurant ... with a rating above 2"" is the request. ""Bay area"" and the rating condition are the constraints.
+2. Place: ""bay area"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: FOOD_TYPE = 'german' and ""above 2"" gives R.RATING > 2.
+4. Assumptions: GEOGRAPHIC.REGION stores the value 'bay area' in lowercase, and the query needs no extra handling for ""a"" restaurant, so any matching row is acceptable.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'german' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4498,4371,2,895,0,2148,False,2026-10-14T20:48:03+00:00
+110,where are some restaurants for nouveau food in the bay area with a rating above 3.5 (very good or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'nouveau' AND R.RATING > 3.5;","1. Request: ""where are some restaurants for nouveau food ... with a rating above 3.5""; the rest is context.
+2. Place: ""the bay area"" is a region, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: FOOD_TYPE = 'nouveau' and R.RATING > 3.5.
+4. Assumptions: the region is stored as 'bay area' in lowercase; the food type is stored as 'nouveau'; ""very good or better"" is just a description of 3.5, so the condition is strictly greater than.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'nouveau' AND R.RATING > 3.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3247,3094,2,593,0,2155,False,2026-10-14T20:48:09+00:00
+111,"I keep changing my mind about whether soup or toast is better company for a compass, where are some restaurants for californian food in the napa valley with a rating above 2.3 (below average or better)?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley' AND R.FOOD_TYPE = 'californian' AND R.RATING > 2.3;","1. Request: ""where are some restaurants for californian food in the napa valley with a rating above 2.3"" (the soup-or-toast sentence is unrelated).
+2. Place: ""napa valley"" is a region, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'napa valley'.
+3. Food and rating: food type 'californian'; ""above 2.3"" means R.RATING > 2.3.
+4. Assumptions: the food type is stored as 'californian' (lowercase); the region is stored as 'napa valley'; no street or city filter applies.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'napa valley' AND R.FOOD_TYPE = 'californian' AND R.RATING > 2.3;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3640,3450,2,760,0,2178,False,2026-10-14T20:48:14+00:00
+112,where are some restaurants for dessert food in the bay area with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'dessert' AND R.RATING > 2;","1. Request: ""where are some restaurants for dessert food"" with the rating condition. The rest of the sentence is framing.
+2. Place: ""bay area"" is a region, not a city or street, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: food type 'dessert'; ""above 2"" means R.RATING > 2.
+4. Assumptions: the region is stored as 'bay area' in lowercase, and the food type is stored as 'dessert'.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses > rather than >=, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'dessert' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4367,4224,2,613,0,2152,False,2026-10-14T20:48:21+00:00
+113,where are some restaurants for hunan food in the bay area with a rating above 3 (good or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'hunan' AND R.RATING > 3;","1. Request: ""where are some restaurants for hunan food in the bay area with a rating above 3"" (the soup-or-pie and ""good or better"" wording is not part of the request).
+2. Place: ""bay area"" is a region, not a city or street, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: R.FOOD_TYPE = 'hunan' and R.RATING > 3 (""above 3"" means strictly greater than).
+4. Assumptions: ""bay area"" is stored as the lowercase REGION value 'bay area', and ""hunan"" is the lowercase FOOD_TYPE value.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'hunan' AND R.RATING > 3;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3200,3027,2,610,0,2151,False,2026-10-14T20:48:27+00:00
+114,where are some restaurants for vietnamese/louisiana food in the bay area with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE IN ('vietnamese', 'louisiana') AND R.RATING > 2;","1. Request: ""where are some restaurants for vietnamese/louisiana food ... with a rating above 2"" (the rest is framing).
+2. Place: ""bay area"" is a region, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: food is vietnamese or louisiana (R.FOOD_TYPE IN ('vietnamese', 'louisiana')); ""above 2"" means R.RATING > 2.
+4. Assumptions: the region value is stored as 'bay area' in lowercase; ""/"" means either food type; ""below average or better"" is only a gloss on the rating threshold.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE IN ('vietnamese', 'louisiana') AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4668,4484,2,875,0,2159,False,2026-10-14T20:48:33+00:00
+115,where can i eat some breakfast food in the bay area with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'breakfast' AND R.RATING > 2;","1. Request: ""where can I eat some breakfast food ... with a rating above 2"" is the restaurant request.
+2. Place: ""bay area"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: breakfast food maps to R.FOOD_TYPE = 'breakfast', and ""above 2"" maps to R.RATING > 2.
+4. Assumptions: the region is stored as 'bay area', the food type is stored as 'breakfast', and ""above 2"" is strict, so ratings of exactly 2 are excluded.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'breakfast' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4367,4180,2,908,0,2151,False,2026-10-14T20:48:40+00:00
+116,"Thinking about snacks, I wonder whether a muffin or a burrito is easier to fold, where can i eat some swiss food in the monterey with a rating above 2 (below average or better)?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'monterey' AND R.FOOD_TYPE = 'swiss' AND R.RATING > 2;","1. Request: ""where can I eat some swiss food in the monterey with a rating above 2"" (the muffin/burrito sentence is unrelated).
+2. Place: ""monterey"" is treated as a city, so L.CITY_NAME = 'monterey'.
+3. Food and rating: R.FOOD_TYPE = 'swiss' and R.RATING > 2.
+4. Assumptions: ""monterey"" is a city rather than a region, and ""above 2"" means strictly greater than 2.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'monterey' AND R.FOOD_TYPE = 'swiss' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3696,3500,2,760,0,2181,False,2026-10-14T20:48:45+00:00
+117,"where can i eat some venison food in the bay area with a rating above 2 (below average or better), and I still cannot decide whether soup or pie is the better breakfast?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'venison' AND R.RATING > 2;","1. Request: ""where can i eat some venison food ... with a rating above 2""; the soup-or-pie sentence is not part of the request.
+2. Place: ""bay area"" is a region, not a city, so join GEOGRAPHIC on R.CITY_NAME and use G.REGION = 'bay area'.
+3. Food and rating: food type is 'venison'; ""above 2"" means R.RATING > 2.
+4. Assumptions: the region is stored as 'bay area' in lowercase, and venison is stored as 'venison' in FOOD_TYPE.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses strict >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'venison' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4253,4040,2,929,0,2171,False,2026-10-14T20:48:52+00:00
+118,"where can i eat some pizza food in the bay area with a rating above 2 (below average or better), and I still cannot decide whether soup or pie is the better breakfast?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'pizza' AND R.RATING > 2;","1. Request: ""where can i eat some pizza food ... with a rating above 2""; the soup-or-pie sentence is unrelated.
+2. Place: ""bay area"" is a region, not a city or street -> join GEOGRAPHIC on R.CITY_NAME and filter G.REGION = 'bay area'.
+3. Food and rating: food is pizza -> R.FOOD_TYPE = 'pizza'; ""above 2"" -> R.RATING > 2.
+4. Assumptions: ""bay area"" is stored as the lowercase region value 'bay area' in GEOGRAPHIC.REGION; the question asks for no particular city or street, so none is filtered.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID JOIN GEOGRAPHIC G ON R.CITY_NAME = G.CITY_NAME WHERE G.REGION = 'bay area' AND R.FOOD_TYPE = 'pizza' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4277,4061,2,728,0,2172,False,2026-10-14T20:48:58+00:00
+119,where can i eat some ice cream food in the monterey with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'monterey' AND R.FOOD_TYPE = 'ice cream' AND R.RATING > 1.7;","1. Request: ""where can i eat some ice cream food"" with a rating above 1.7. The ""in the monterey"" and rating parts define the filters.
+2. Place: ""monterey"" is a city, so filter on L.CITY_NAME = 'monterey'.
+3. Food and rating: food type is 'ice cream', and ""above 1.7"" means R.RATING > 1.7.
+4. Assumptions: ""monterey"" is a city rather than a region or county, and ""ice cream"" is stored as the exact lowercase string 'ice cream'.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'monterey' AND R.FOOD_TYPE = 'ice cream' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4715,4544,2,877,0,2156,False,2026-10-14T20:49:05+00:00
+120,give me some yogurt restaurants in santa rosa with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'santa rosa' AND R.FOOD_TYPE = 'yogurt' AND R.RATING > 1.7;","1. Request: ""give me some yogurt restaurants ... with a rating above 1.7"" is the restaurant request. The rest is filler.
+2. Place: ""santa rosa"" is a city, so L.CITY_NAME = 'santa rosa'.
+3. Food and rating: food type is 'yogurt', and ""above 1.7"" means R.RATING > 1.7.
+4. Assumptions: ""yogurt"" is stored as the FOOD_TYPE value 'yogurt' (all lowercase). The parenthetical ""poorly rated or better"" just describes 1.7 and doesn't change the strict > condition. Santa Rosa is not treated as a region.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'santa rosa' AND R.FOOD_TYPE = 'yogurt' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4043,3897,2,848,0,2157,False,2026-10-14T20:49:11+00:00
+121,"I have been comparing the merits of lentil soup, roasted pears, and tiny pancakes for a fictional train journey, and still cannot decide which snack would best accompany a collection of mismatched teacups. I am still deciding whether a taco or a bowl of cereal suits a rainy day, give me some california restaurants in mill valley with a rating above 2 (below average or better)? Meanwhile, a hypothetical lunchbox committee is debating lentil pie, roasted pears, and tiny omelets, with no agreement about which one would travel best across an imaginary ocean.","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'mill valley' AND R.RATING > 2;","1. Request: ""give me some California restaurants in Mill Valley with a rating above 2."" The lentil, pear, taco, and teacup sentences are unrelated.
+2. Place: ""Mill Valley"" is a city, so filter L.CITY_NAME = 'mill valley'.
+3. Food and rating: no food type is given, so no food filter. ""Above 2"" means R.RATING > 2.
+4. Assumptions: ""below average or better"" is a gloss on the threshold, not a separate condition, so I use strict > 2. The state is not filtered because the database has no state column, and the city name is specific enough.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'mill valley' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3977,3823,2,729,0,2307,False,2026-10-14T20:49:17+00:00
+122,"I have been comparing the merits of lentil soup, roasted pears, and tiny pancakes for a fictional train journey, and still cannot decide which snack would best accompany a collection of mismatched teacups. Thinking about snacks, I wonder whether a muffin or a burrito is easier to fold, give me some cafe restaurants in richmond with a rating above 2 (below average or better)? Separately, I am still deciding whether a basket of roasted chickpeas, a stack of pear pancakes, or a bowl of noodles would make the most sensible snack for a journey that exists only on a kitchen calendar.","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'richmond' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 2;","1. Request: ""cafe restaurants in richmond with a rating above 2."" The muffin, burrito, teacup, and snack sentences are unrelated.
+2. Place: ""richmond"" is treated as a city, so L.CITY_NAME = 'richmond'.
+3. Food and rating: food type is 'cafe'; ""above 2"" gives R.RATING > 2.
+4. Assumptions: ""cafe restaurants"" maps to FOOD_TYPE = 'cafe'. ""Richmond"" means the city rather than a region. The rating threshold is strict (>), as stated.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'richmond' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4556,4373,2,830,0,2318,False,2026-10-14T20:49:24+00:00
+123,give me some sandwiches restaurants in walnut creek with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'walnut creek' AND R.FOOD_TYPE = 'sandwiches' AND R.RATING > 2;","1. Request: ""give me some sandwiches restaurants ... with a rating above 2"" is the restaurant request; ""in walnut creek"" is the place.
+2. Place: walnut creek is a city, so L.CITY_NAME = 'walnut creek'.
+3. Food and rating: food type is 'sandwiches', and ""above 2"" means R.RATING > 2.
+4. Assumptions: ""sandwiches"" matches FOOD_TYPE exactly, the city filter uses LOCATION.CITY_NAME as in the examples, and ""below average or better"" is only explanatory text, so the threshold is strictly greater than 2.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'walnut creek' AND R.FOOD_TYPE = 'sandwiches' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3114,2958,2,620,0,2153,False,2026-10-14T20:49:29+00:00
+124,give me some cafe restaurants in yountville with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'yountville' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 2;","1. Request: ""give me some cafe restaurants ... with a rating above 2"" is the restaurant request; the rest is filler.
+2. Place: yountville is a city, so L.CITY_NAME = 'yountville'.
+3. Food and rating: food type is cafe (R.FOOD_TYPE = 'cafe'), and ""above 2"" means R.RATING > 2.
+4. Assumptions: ""cafe"" matches the FOOD_TYPE value 'cafe' exactly, and the parenthetical ""below average or better"" is only a gloss on the threshold, so I use strict > 2.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'yountville' AND R.FOOD_TYPE = 'cafe' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3908,3728,2,824,0,2149,False,2026-10-14T20:49:35+00:00
+125,give me some places for catering in vallejo with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'vallejo' AND R.FOOD_TYPE = 'catering' AND R.RATING > 1.7;","1. Request: ""places for catering in vallejo with a rating above 1.7"" (the ""poorly rated or better"" note is just a gloss).
+2. Place: vallejo is a city, so filter LOCATION.CITY_NAME = 'vallejo'.
+3. Food and rating: food type is catering (R.FOOD_TYPE = 'catering'), and ""above 1.7"" means R.RATING > 1.7.
+4. Assumptions: 'catering' is stored as a FOOD_TYPE value, and the location's city matches the restaurant's city.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'vallejo' AND R.FOOD_TYPE = 'catering' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3999,3828,2,785,0,2152,False,2026-10-14T20:49:42+00:00
+126,"On a separate food note, I cannot choose between noodles and a sandwich, give me some places for chinese in pacheco with a rating above 4.5 (excellent or better)?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'pacheco' AND R.FOOD_TYPE = 'chinese' AND R.RATING > 4.5;","1. Request: find Chinese restaurants with a rating above 4.5. The noodles-or-sandwich sentence is not part of the request.
+2. Place: ""pacheco"" is a city, so filter on L.CITY_NAME = 'pacheco'.
+3. Food and rating: food type is 'chinese', and ""excellent or better"" means RATING > 4.5.
+4. Assumptions: ""pacheco"" is stored as a city name in LOCATION.CITY_NAME, and the rating scale matches the 4.5 threshold given in the question.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'pacheco' AND R.FOOD_TYPE = 'chinese' AND R.RATING > 4.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3479,3342,2,778,0,2175,False,2026-10-14T20:49:48+00:00
+127,give me some places for chinese in petaluma with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'petaluma' AND R.FOOD_TYPE = 'chinese' AND R.RATING > 2;","1. Request: ""give me some places for chinese in petaluma with a rating above 2""; the ""below average or better"" phrase is a gloss on the rating, and the sentence structure is otherwise a plain request.
+2. Place: petaluma is a city, so L.CITY_NAME = 'petaluma'.
+3. Food and rating: food type is chinese (R.FOOD_TYPE = 'chinese'), and ""above 2"" means R.RATING > 2.
+4. Assumptions: the rating scale is numeric, ""above 2"" is strict (> 2, not >= 2), and the query should use the LOCATION city, as in the examples.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'petaluma' AND R.FOOD_TYPE = 'chinese' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4034,3908,2,713,0,2148,False,2026-10-14T20:49:54+00:00
+128,give me some places for burgers in los altos with a rating above 1.4 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'los altos' AND R.FOOD_TYPE = 'burger' AND R.RATING > 1.4;","1. Request: find burger restaurants in Los Altos with a rating above 1.4. The ""poorly rated or better"" note only explains the scale.
+2. Place: ""los altos"" is a city, so L.CITY_NAME = 'los altos'.
+3. Food and rating: food type is 'burger', and ""above 1.4"" means R.RATING > 1.4.
+4. Assumptions: the food type is stored as the singular 'burger', the city is matched on LOCATION.CITY_NAME, and the query needs no GEOGRAPHIC join.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'los altos' AND R.FOOD_TYPE = 'burger' AND R.RATING > 1.4;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4114,3813,2,796,0,2152,False,2026-10-14T20:50:00+00:00
+129,give me some places for american in san francisco with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san francisco' AND R.FOOD_TYPE = 'american' AND R.RATING > 2;","1. Request: ""give me some places for american ... with a rating above 2"" (the rest is filler).
+2. Place: ""san francisco"" is a city -> L.CITY_NAME = 'san francisco'.
+3. Food and rating: food type 'american'; ""above 2"" -> R.RATING > 2.
+4. Assumptions: ""below average or better"" is a parenthetical gloss of the threshold, not a separate condition. The city is matched on LOCATION.CITY_NAME, as in the examples.
+5. Check: selects exactly L.HOUSE_NUMBER, R.NAME; uses >; no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san francisco' AND R.FOOD_TYPE = 'american' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4364,4194,2,748,0,2146,False,2026-10-14T20:50:07+00:00
+130,where is a thai in unknown with a rating above 2.7 (average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'unknown' AND R.FOOD_TYPE = 'thai' AND R.RATING > 2.7;","1. Request: ""where is a thai in unknown with a rating above 2.7"" is the restaurant request. The ""(average or better)"" gloss only describes the threshold.
+2. Place: ""unknown"" is not a known region or street, so I treat it as a city: L.CITY_NAME = 'unknown'.
+3. Food and rating: R.FOOD_TYPE = 'thai' and R.RATING > 2.7 (strictly above).
+4. Assumptions: ""unknown"" is a city name, not a region or street; text is lowercase as stated; the rating is stored on RESTAURANT.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'unknown' AND R.FOOD_TYPE = 'thai' AND R.RATING > 2.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3829,3664,2,640,0,2145,False,2026-10-14T20:50:13+00:00
+131,"My unrelated culinary dilemma involves choosing between cinnamon toast, vegetable pie, and a bowl of rice for a pretend celebration, while a very serious committee of stuffed animals reviews the menu. On a separate food note, I cannot choose between noodles and a sandwich, where is a chinese in saratoga with a rating above 1.7 (poorly rated or better)? This also reminds me of an unrelated menu puzzle involving pumpkin biscuits, chilled soup, and an imaginary picnic where every plate must be shared with a different stuffed animal.","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'saratoga' AND R.FOOD_TYPE = 'chinese' AND R.RATING > 1.7;","1. Request: Find Chinese restaurants in Saratoga with a rating above 1.7. The stuffed-animal menu and picnic sentences are unrelated.
+2. Place: ""saratoga"" is a city, so filter LOCATION.CITY_NAME = 'saratoga'.
+3. Food and rating: food type is 'chinese', and ""above 1.7"" means R.RATING > 1.7.
+4. Assumptions: ""saratoga"" refers to the city, not a region or street. The ""poorly rated or better"" gloss is just a restatement of the strict "">"" comparison, so the threshold is exclusive.
+5. Check: The query selects exactly L.HOUSE_NUMBER and R.NAME, uses "">"", and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'saratoga' AND R.FOOD_TYPE = 'chinese' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3478,3322,2,769,0,2309,False,2026-10-14T20:50:19+00:00
+132,where is a haitian in emeryville with a rating above 4.5 (excellent or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'emeryville' AND R.FOOD_TYPE = 'haitian' AND R.RATING > 4.5;","1. Request: ""where is a haitian ... restaurant"", with the rating condition ""above 4.5."" The ""in emeryville"" phrase sets the place.
+2. Place: ""emeryville"" is a city, so filter on L.CITY_NAME = 'emeryville'.
+3. Food and rating: food type 'haitian'; ""above 4.5"" means R.RATING > 4.5.
+4. Assumptions: ""haitian"" is stored as lowercase 'haitian' in FOOD_TYPE; ""excellent or better"" is a parenthetical gloss on 4.5, so the strict > comparison applies; the city name matches LOCATION.CITY_NAME.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'emeryville' AND R.FOOD_TYPE = 'haitian' AND R.RATING > 4.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3997,3710,2,737,0,2149,False,2026-10-14T20:50:25+00:00
+133,where is a mexican in ben lomond with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'ben lomond' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 2;","1. Request: ""where is a mexican ... with a rating above 2"" is the restaurant request; ""in ben lomond"" gives the location.
+2. Place: ""ben lomond"" is a city, so use L.CITY_NAME = 'ben lomond'.
+3. Food and rating: food type is 'mexican', and ""above 2"" means R.RATING > 2.
+4. Assumptions: ""mexican"" is stored as the lowercase value 'mexican' in FOOD_TYPE, and the city appears in LOCATION.CITY_NAME as 'ben lomond'.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'ben lomond' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),2689,2547,2,512,0,2147,False,2026-10-14T20:50:30+00:00
+134,"where is a french in emeryville with a rating above 2 (below average or better), and I have not settled whether pasta belongs in a lunchbox or a flowerpot?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'emeryville' AND R.FOOD_TYPE = 'french' AND R.RATING > 2;","1. Request: find french restaurants with a rating above 2. The pasta lunchbox-or-flowerpot sentence is not part of the request.
+2. Place: emeryville is a city, so L.CITY_NAME = 'emeryville'.
+3. Food and rating: food type is french, and ""above 2"" means R.RATING > 2.
+4. Assumptions: ""below average or better"" is a parenthetical gloss, so the condition is strictly greater than 2. Text values are already lowercase as stated.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'emeryville' AND R.FOOD_TYPE = 'french' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3686,3543,2,646,0,2172,False,2026-10-14T20:50:36+00:00
+135,"where is a restaurant in san carlos for bread food with a rating above 1.8 (poorly rated or better), and I am still weighing curry against apple pie for a trip to the moon?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san carlos' AND R.FOOD_TYPE = 'bread' AND R.RATING > 1.8;","1. Request: ""where is a restaurant in san carlos for bread food with a rating above 1.8"" is the request; the curry, apple pie, and moon sentences are unrelated.
+2. Place: ""san carlos"" is a city, so L.CITY_NAME = 'san carlos'.
+3. Food and rating: food type is 'bread', and ""above 1.8"" means R.RATING > 1.8.
+4. Assumptions: ""bread food"" maps to FOOD_TYPE = 'bread'; ""san carlos"" is a city, not a region or street; the values are lowercase as stated.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san carlos' AND R.FOOD_TYPE = 'bread' AND R.RATING > 1.8;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3284,3046,2,609,0,2178,False,2026-10-14T20:50:41+00:00
+136,where is a restaurant in antioch for thai food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'antioch' AND R.FOOD_TYPE = 'thai' AND R.RATING > 2;","1. Request: find a thai restaurant in antioch with a rating above 2.
+2. Place: antioch is a city, so L.CITY_NAME = 'antioch'.
+3. Food and rating: R.FOOD_TYPE = 'thai' and R.RATING > 2.
+4. Assumptions: ""below average or better"" only explains the threshold, so it's the strict condition R.RATING > 2. The city is antioch, not a street or region. The query joins only RESTAURANT and LOCATION because no GEOGRAPHIC filter is needed.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'antioch' AND R.FOOD_TYPE = 'thai' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4229,4073,2,867,0,2150,False,2026-10-14T20:50:47+00:00
+137,where is a restaurant in moraga for ice cream food with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'moraga' AND R.FOOD_TYPE = 'ice cream' AND R.RATING > 1.7;","1. Request: ""where is a restaurant in moraga for ice cream food with a rating above 1.7"" is the request. The ""(poorly rated or better)"" phrase only explains the rating scale.
+2. Place: moraga is a city, so L.CITY_NAME = 'moraga'.
+3. Food and rating: food type is 'ice cream', and ""above 1.7"" means R.RATING > 1.7.
+4. Assumptions: the food type is stored as exactly 'ice cream', the city as 'moraga', and the question asks for restaurants matching all three conditions.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'moraga' AND R.FOOD_TYPE = 'ice cream' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3607,3476,2,766,0,2157,False,2026-10-14T20:50:53+00:00
+138,where is a restaurant in fairfield for donuts food with a rating above 4.5 (excellent or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'fairfield' AND R.FOOD_TYPE = 'donuts' AND R.RATING > 4.5;","1. Request: find a donut restaurant with a rating above 4.5. The ""excellent or better"" note is only a gloss on 4.5.
+2. Place: ""fairfield"" is a city, so L.CITY_NAME = 'fairfield'.
+3. Food and rating: R.FOOD_TYPE = 'donuts' and R.RATING > 4.5.
+4. Assumptions: ""donuts"" is stored as 'donuts' in FOOD_TYPE, and ""fairfield"" refers to the city rather than a region or street.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'fairfield' AND R.FOOD_TYPE = 'donuts' AND R.RATING > 4.5;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3690,3428,2,656,0,2155,False,2026-10-14T20:50:59+00:00
+139,where is a restaurant in milpitas for vietnamese food with a rating above 3.3 (good or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'milpitas' AND R.FOOD_TYPE = 'vietnamese' AND R.RATING > 3.3;","1. Request: ""where is a restaurant ... for vietnamese food with a rating above 3.3"" (the rest is filler).
+2. Place: ""milpitas"" is a city, so L.CITY_NAME = 'milpitas'.
+3. Food and rating: R.FOOD_TYPE = 'vietnamese' and R.RATING > 3.3.
+4. Assumptions: ""good or better"" is a parenthetical explanation of the threshold, so the comparison is strict (>), not >=. The question uses no street or region filter.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'milpitas' AND R.FOOD_TYPE = 'vietnamese' AND R.RATING > 3.3;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3164,3013,2,572,0,2155,False,2026-10-14T20:51:04+00:00
+140,what are some restaurants in san lorenzo for french food with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san lorenzo' AND R.FOOD_TYPE = 'french' AND R.RATING > 1.7;","1. Request: ""what are some restaurants ... for french food with a rating above 1.7"" is the request; the rest is filler.
+2. Place: ""san lorenzo"" is a city, so L.CITY_NAME = 'san lorenzo'.
+3. Food and rating: R.FOOD_TYPE = 'french' and R.RATING > 1.7.
+4. Assumptions: ""san lorenzo"" refers to the city, not a street or region. ""Poorly rated or better"" just explains the rating scale, so I use the strict > 1.7 threshold.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san lorenzo' AND R.FOOD_TYPE = 'french' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3797,3629,2,706,0,2157,False,2026-10-14T20:51:10+00:00
+141,what are some restaurants in berkeley for mexican food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'berkeley' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 2;","1. Request: ""what are some restaurants ... for mexican food with a rating above 2"" (the rest is framing).
+2. Place: ""berkeley"" is a city, so filter on L.CITY_NAME = 'berkeley'.
+3. Food and rating: food type 'mexican', and ""above 2"" means R.RATING > 2.
+4. Assumptions: ""berkeley"" is stored in lowercase as 'berkeley', and the rating scale is numeric so ""above 2"" is a strict comparison.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses `>`, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'berkeley' AND R.FOOD_TYPE = 'mexican' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3060,2932,2,482,0,2152,False,2026-10-14T20:51:16+00:00
+142,what are some restaurants in sunnyvale for afghani food with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'sunnyvale' AND R.FOOD_TYPE = 'afghani' AND R.RATING > 2;","1. Request: ""what are some restaurants ... for afghani food ... with a rating above 2"" is the restaurant request; the rest is filler.
+2. Place: ""sunnyvale"" is a city, so L.CITY_NAME = 'sunnyvale'.
+3. Food and rating: food type is 'afghani', and ""above 2"" means R.RATING > 2.
+4. Assumptions: ""sunnyvale"" refers to the city, not a region or street. Food and city values are stored in lowercase, as stated.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'sunnyvale' AND R.FOOD_TYPE = 'afghani' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3683,3501,2,754,0,2154,False,2026-10-14T20:51:21+00:00
+143,"While planning a completely hypothetical feast, I keep weighing pumpkin soup against blueberry dumplings and wondering whether a pocket-sized omelet would be practical for a voyage across a carpeted ocean. what are some restaurants in alameda for burgers food with a rating above 2 (below average or better)? Meanwhile, a hypothetical lunchbox committee is debating lentil pie, roasted pears, and tiny omelets, with no agreement about which one would travel best across an imaginary ocean.","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'alameda' AND R.FOOD_TYPE = 'burgers' AND R.RATING > 2;","1. Request: restaurants in alameda for burgers with a rating above 2.
+2. Place: alameda is a city, so L.CITY_NAME = 'alameda'.
+3. Food and rating: R.FOOD_TYPE = 'burgers' and R.RATING > 2.
+4. Assumptions: ""alameda"" names the city rather than the county, and the food type is stored as 'burgers' (plural, as in the question).
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'alameda' AND R.FOOD_TYPE = 'burgers' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4583,4405,2,818,0,2287,False,2026-10-14T20:51:28+00:00
+144,what are some restaurants in aptos for barbeque food with a rating above 1.8 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'aptos' AND R.FOOD_TYPE = 'barbeque' AND R.RATING > 1.8;","1. Request: ""what are some restaurants in aptos for barbeque food with a rating above 1.8"" is the request; the ""poorly rated or better"" note only explains the threshold.
+2. Place: aptos is a city, so L.CITY_NAME = 'aptos'.
+3. Food and rating: R.FOOD_TYPE = 'barbeque' and R.RATING > 1.8 (strictly above).
+4. Assumptions: the food type is stored as 'barbeque' (the question's spelling), and the city filter uses LOCATION.CITY_NAME as the example queries do.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'aptos' AND R.FOOD_TYPE = 'barbeque' AND R.RATING > 1.8;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),13687,13446,2,810,0,2157,False,2026-10-14T20:51:44+00:00
+145,give me some steak restaurants in morgan hill with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'morgan hill' AND R.FOOD_TYPE = 'steak' AND R.RATING > 2;","Request: The restaurant request is ""steak restaurants in morgan hill with a rating above 2""; the rest of the sentence is not part of the request.
+Place: ""morgan hill"" is a city, so L.CITY_NAME = 'morgan hill'.
+Food and rating: food type is 'steak', and ""above 2"" means R.RATING > 2.
+Assumptions: Text values are lowercase, so 'morgan hill' and 'steak' are written in lowercase. ""Below average or better"" is just the parenthetical gloss on the rating scale and does not change the condition, which stays R.RATING > 2. The city filter applies to LOCATION.CITY_NAME, the restaurant's address city.
+Check: The query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'morgan hill' AND R.FOOD_TYPE = 'steak' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),2693,2486,2,407,0,2150,False,2026-10-14T20:51:48+00:00
+146,give me some coffee restaurants in castro valley with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'castro valley' AND R.FOOD_TYPE = 'coffee' AND R.RATING > 2;","1. Request: ""give me some coffee restaurants,"" with the rating condition. The sentence about ""above 2"" is the rating filter.
+2. Place: ""castro valley"" is a city, so filter on L.CITY_NAME = 'castro valley'.
+3. Food and rating: food type is 'coffee', and ""above 2"" maps to R.RATING > 2 (the parenthetical label doesn't change the operator).
+4. Assumptions: the food type is stored as 'coffee' exactly. The city is matched through LOCATION.CITY_NAME, as in the city example. The output is the house number and name only.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'castro valley' AND R.FOOD_TYPE = 'coffee' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3531,3411,2,718,0,2150,False,2026-10-14T20:51:54+00:00
+147,"give me some spanish restaurants in san jose with a rating above 2 (below average or better), while the menu leaves me wondering whether toast or soup can teach a compass to sing?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san jose' AND R.FOOD_TYPE = 'spanish' AND R.RATING > 2;","1. Request: find Spanish restaurants in San Jose with a rating above 2; the menu sentence is unrelated.
+2. Place: ""san jose"" is a city, so filter on L.CITY_NAME = 'san jose'.
+3. Food and rating: food type is 'spanish', and ""above 2"" maps to R.RATING > 2.
+4. Assumptions: the food type is stored as 'spanish' in lowercase, and the city name matches LOCATION.CITY_NAME directly, so no GEOGRAPHIC join is needed.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'san jose' AND R.FOOD_TYPE = 'spanish' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3840,3673,2,706,0,2176,False,2026-10-14T20:52:00+00:00
+148,give me some american restaurants in hollister with a rating above 2 (below average or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'hollister' AND R.FOOD_TYPE = 'american' AND R.RATING > 2;","1. Request: ""give me some american restaurants in hollister with a rating above 2"" is the whole request. The parenthetical ""(below average or better)"" only explains the threshold.
+2. Place: ""hollister"" is a city, so L.CITY_NAME = 'hollister'.
+3. Food and rating: food type is 'american', so R.FOOD_TYPE = 'american'. ""Above 2"" means R.RATING > 2.
+4. Assumptions: ""hollister"" is stored as a city in LOCATION.CITY_NAME, not as a region or street. The text values are lowercase, as stated. The parenthetical does not change the operator, so it stays strict (>).
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'hollister' AND R.FOOD_TYPE = 'american' AND R.RATING > 2;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3570,3374,2,673,0,2147,False,2026-10-14T20:52:06+00:00
+149,give me some seafood restaurants in napa with a rating above 1.7 (poorly rated or better)?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'napa' AND R.FOOD_TYPE = 'seafood' AND R.RATING > 1.7;","1. Request: ""seafood restaurants in napa with a rating above 1.7"" is the request; the ""poorly rated or better"" note only explains the 1.7 cutoff.
+2. Place: ""napa"" is treated as a city, so filter on L.CITY_NAME = 'napa'.
+3. Food and rating: food type is seafood (R.FOOD_TYPE = 'seafood'), and ""above 1.7"" means R.RATING > 1.7.
+4. Assumptions: ""napa"" refers to the city, not the Napa Valley region; food type is stored as 'seafood'; the query uses the LOCATION city, matching the examples.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses >, and has no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE L.CITY_NAME = 'napa' AND R.FOOD_TYPE = 'seafood' AND R.RATING > 1.7;",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4316,4157,2,738,0,2153,False,2026-10-14T20:52:13+00:00
+150,"where is burger pit steak house in campbell, and I have not settled whether pasta belongs in a lunchbox or a flowerpot?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE R.NAME = 'burger pit steak house' AND L.CITY_NAME = 'campbell';","1. Request: ""where is burger pit steak house in campbell"" is the restaurant request. The pasta sentence is unrelated.
+2. Place: ""campbell"" is a city, so filter on L.CITY_NAME = 'campbell'.
+3. Food and rating: no food type or rating condition. ""Burger pit steak house"" is the restaurant name, so filter on R.NAME.
+4. Assumptions: the name is stored exactly as 'burger pit steak house' in lowercase, and the query needs no food type, region, or rating filter.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no rating comparison.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE R.NAME = 'burger pit steak house' AND L.CITY_NAME = 'campbell';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3767,3587,2,713,0,2163,False,2026-10-14T20:52:19+00:00
+151,where is roof top cafe in palo alto ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE R.NAME = 'roof top cafe' AND L.CITY_NAME = 'palo alto';","1. Request: ""where is roof top cafe"" is the restaurant request; ""in palo alto"" gives the place.
+2. Place: ""palo alto"" is a city, so L.CITY_NAME = 'palo alto'.
+3. Food and rating: none stated; ""cafe"" is treated as part of the restaurant's name, so no food or rating filter.
+4. Assumptions: ""roof top cafe"" is the restaurant name, written in lowercase as the database requires; the name matches exactly, and the city is taken from LOCATION.CITY_NAME.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE R.NAME = 'roof top cafe' AND L.CITY_NAME = 'palo alto';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),5348,3499,2,633,0,2135,False,2026-10-14T20:52:26+00:00
+152,"where is azteca de oro restaurant in castroville, and I am still weighing curry against apple pie for a trip to the moon?","SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE R.NAME = 'azteca de oro' AND L.CITY_NAME = 'castroville';","1. Request: find the location of the restaurant named ""azteca de oro"" in castroville; the curry/apple pie/moon sentences are unrelated.
+2. Place: castroville is a city, so L.CITY_NAME = 'castroville'.
+3. Food and rating: none specified, so no food type or rating filter.
+4. Assumptions: the name matches exactly, and both values are lowercase as stated.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, uses no DISTINCT, ORDER BY, or LIMIT, and has no rating comparison.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE R.NAME = 'azteca de oro' AND L.CITY_NAME = 'castroville';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),5745,5599,2,548,0,2160,False,2026-10-14T20:52:34+00:00
+153,where is marys pizza shack in san ramon ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE R.NAME = 'marys pizza shack' AND L.CITY_NAME = 'san ramon';","1. Request: ""where is marys pizza shack"" is the restaurant request; ""in san ramon"" supplies the place.
+2. Place: san ramon is a city, so L.CITY_NAME = 'san ramon'.
+3. Food and rating: none specified, so no food or rating conditions.
+4. Assumptions: the name is stored as 'marys pizza shack' with no apostrophe, and I use an exact match as in the examples.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE R.NAME = 'marys pizza shack' AND L.CITY_NAME = 'san ramon';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),3938,3799,2,763,0,2136,False,2026-10-14T20:52:40+00:00
+154,where is bavarian corner in la honda ?,"SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE R.NAME = 'bavarian corner' AND L.CITY_NAME = 'la honda';","1. Request: ""where is bavarian corner"" is the restaurant request, so I need the address of the restaurant named bavarian corner.
+2. Place: ""la honda"" is a city, so L.CITY_NAME = 'la honda'.
+3. Food and rating: no food type or rating is mentioned, so neither condition applies.
+4. Assumptions: ""bavarian corner"" is the restaurant's full name, matched exactly against lowercase R.NAME; ""in la honda"" refers to LOCATION.CITY_NAME.
+5. Check: the query selects exactly L.HOUSE_NUMBER and R.NAME, with no DISTINCT, ORDER BY, or LIMIT.
+
+SQL: SELECT L.HOUSE_NUMBER, R.NAME FROM RESTAURANT R JOIN LOCATION L ON R.ID = L.RESTAURANT_ID WHERE R.NAME = 'bavarian corner' AND L.CITY_NAME = 'la honda';",cot,Chain of Thought,claude-haiku-5-5,Claude Code (claude -p),2.1.300 (Claude Code),4327,4203,2,731,0,2134,False,2026-10-14T20:52:46+00:00
