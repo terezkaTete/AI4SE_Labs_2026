@@ -218,3 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local conversation transcripts (not committed)
+Week_05_Designing/Task_3/transcript_*.md
