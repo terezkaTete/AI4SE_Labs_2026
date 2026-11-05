@@ -1,0 +1,361 @@
+{
+  "model": "gpt-5-mini",
+  "top_k": 5,
+  "tasks": [
+    {
+      "method": "OrderStatus.is_terminal",
+      "file": "playground/playground/enums.py",
+      "retrieved": [
+        {
+          "id": "playground/playground/enums.py::OrderStatus",
+          "score": 0.939
+        },
+        {
+          "id": "playground/tests/test_enums.py::OrderStatusTests.test_cancelled_is_terminal",
+          "score": 0.886
+        },
+        {
+          "id": "playground/tests/test_enums.py::OrderStatusTests.test_new_is_not_terminal",
+          "score": 0.878
+        },
+        {
+          "id": "playground/tests/test_enums.py::OrderStatusTests.test_shipped_is_terminal",
+          "score": 0.868
+        },
+        {
+          "id": "playground/tests/test_enums.py::OrderStatusTests.test_reserved_is_not_terminal",
+          "score": 0.856
+        }
+      ],
+      "prompt": "## Task\n# file: playground/playground/enums.py | class: OrderStatus\nImplement the method `is_terminal` of class `OrderStatus` in `playground/playground/enums.py`.\nDocstring: True when the status ends further transitions.\n\n## Retrieved context\n### Context 1 (playground/playground/enums.py::OrderStatus)\n```python\n# file: playground/playground/enums.py | class: OrderStatus\nclass OrderStatus(Enum):\n    \"\"\"Lifecycle stages for an order.\"\"\"\n    NEW = \"new\"\n    RESERVED = \"reserved\"\n    SHIPPED = \"shipped\"\n    CANCELLED = \"cancelled\"\n    @property\n    def is_terminal(self) -> bool:\n        ...\n```\n\n### Context 2 (playground/tests/test_enums.py::OrderStatusTests.test_cancelled_is_terminal)\n```python\n# file: playground/tests/test_enums.py | class: OrderStatusTests\nclass OrderStatusTests(unittest.TestCase):\n    def test_cancelled_is_terminal(self) -> None:\n        self.assertIs(OrderStatus.CANCELLED.is_terminal, True)\n```\n\n### Context 3 (playground/tests/test_enums.py::OrderStatusTests.test_new_is_not_terminal)\n```python\n# file: playground/tests/test_enums.py | class: OrderStatusTests\nclass OrderStatusTests(unittest.TestCase):\n    def test_new_is_not_terminal(self) -> None:\n        self.assertIs(OrderStatus.NEW.is_terminal, False)\n```\n\n### Context 4 (playground/tests/test_enums.py::OrderStatusTests.test_shipped_is_terminal)\n```python\n# file: playground/tests/test_enums.py | class: OrderStatusTests\nclass OrderStatusTests(unittest.TestCase):\n    def test_shipped_is_terminal(self) -> None:\n        self.assertIs(OrderStatus.SHIPPED.is_terminal, True)\n```\n\n### Context 5 (playground/tests/test_enums.py::OrderStatusTests.test_reserved_is_not_terminal)\n```python\n# file: playground/tests/test_enums.py | class: OrderStatusTests\nclass OrderStatusTests(unittest.TestCase):\n    def test_reserved_is_not_terminal(self) -> None:\n        self.assertIs(OrderStatus.RESERVED.is_terminal, False)\n```",
+      "reply": "```python\n    @property\n    def is_terminal(self) -> bool:\n        \"\"\"True when the status ends further transitions.\"\"\"\n        return self in (OrderStatus.SHIPPED, OrderStatus.CANCELLED)\n```",
+      "code": "@property\ndef is_terminal(self) -> bool:\n    \"\"\"True when the status ends further transitions.\"\"\"\n    return self in (OrderStatus.SHIPPED, OrderStatus.CANCELLED)",
+      "seconds": 7.0,
+      "tokens": {
+        "prompt": 569,
+        "completion": 309
+      },
+      "written": true
+    },
+    {
+      "method": "InventoryLedger.__contains__",
+      "file": "playground/playground/inventory.py",
+      "retrieved": [
+        {
+          "id": "playground/playground/inventory.py::InventoryLedger._require_sku",
+          "score": 0.89
+        },
+        {
+          "id": "playground/playground/inventory.py::InventoryLedger.available",
+          "score": 0.889
+        },
+        {
+          "id": "playground/tests/test_inventory.py::InventoryLedgerStockTests.test_require_sku_returns_normalized",
+          "score": 0.87
+        },
+        {
+          "id": "playground/playground/inventory.py::InventoryLedger.__iter__",
+          "score": 0.86
+        },
+        {
+          "id": "playground/playground/inventory.py::InventoryLedger",
+          "score": 0.857
+        }
+      ],
+      "prompt": "## Task\n# file: playground/playground/inventory.py | class: InventoryLedger\nImplement the method `__contains__` of class `InventoryLedger` in `playground/playground/inventory.py`.\nDocstring: Return whether ``sku`` normalises to a SKU with positive on-hand stock.\n\n## Retrieved context\n### Context 1 (playground/playground/inventory.py::InventoryLedger._require_sku)\n```python\n# file: playground/playground/inventory.py | class: InventoryLedger\nclass InventoryLedger:\n    def _require_sku(self, sku: str) -> str:\n        \"\"\"Normalise ``sku`` and raise ``UnknownSKUError`` if it is unregistered.\"\"\"\n        sku = normalize_sku(sku)\n        if sku not in self._product_repo:\n            raise UnknownSKUError(sku)\n        return sku\n```\n\n### Context 2 (playground/playground/inventory.py::InventoryLedger.available)\n```python\n# file: playground/playground/inventory.py | class: InventoryLedger\nclass InventoryLedger:\n    def available(self, sku: str) -> int:\n        \"\"\"Return on-hand minus reserved for ``sku``.\"\"\"\n        sku = self._require_sku(sku)\n        return self._on_hand.get(sku, 0) - self._reserved.get(sku, 0)\n```\n\n### Context 3 (playground/tests/test_inventory.py::InventoryLedgerStockTests.test_require_sku_returns_normalized)\n```python\n# file: playground/tests/test_inventory.py | class: InventoryLedgerStockTests\nclass InventoryLedgerStockTests(unittest.TestCase):\n    def test_require_sku_returns_normalized(self) -> None:\n        self.assertEqual(self.ledger._require_sku(\" gr-2001 \"), \"GR-2001\")\n```\n\n### Context 4 (playground/playground/inventory.py::InventoryLedger.__iter__)\n```python\n# file: playground/playground/inventory.py | class: InventoryLedger\nclass InventoryLedger:\n    def __iter__(self) -> Iterator[str]:\n        \"\"\"Iterate over SKUs with positive on-hand stock, in sorted order.\"\"\"\n        for sku in sorted(k for k, v in self._on_hand.items() if v > 0):\n            yield sku\n```\n\n### Context 5 (playground/playground/inventory.py::InventoryLedger)\n```python\n# file: playground/playground/inventory.py | class: InventoryLedger\nclass InventoryLedger:\n    \"\"\"Tracks on-hand and reserved quantities per SKU.\"\"\"\n    def __init__(self, product_repo: Repository) -> None:\n        \"\"\"Create a ledger backed by ``product_repo`` for SKU validation.\"\"\"\n        ...\n    def _require_sku(self, sku: str) -> str:\n        \"\"\"Normalise ``sku`` and raise ``UnknownSKUError`` if it is unregistered.\"\"\"\n        ...\n    def add_stock(self, sku: str, quantity: int) -> int:\n        \"\"\"Add ``quantity`` to on-hand stock for ``sku``; return the new total.\"\"\"\n        ...\n    def available(self, sku: str) -> int:\n        \"\"\"Return on-hand minus reserved for ``sku``.\"\"\"\n        ...\n    def reserve(self, sku: str, quantity: int) -> ReservationContext:\n        \"\"\"Reserve ``quantity`` of ``sku`` and return a context that can commit or release it.\"\"\"\n        ...\n    def release(self, sku: str, quantity: int) -> None:\n        \"\"\"Release ``quantity`` previously reserved for ``sku``.\"\"\"\n        ...\n    def commit(self, sku: str, quantity: int) -> None:\n        \"\"\"Commit ``quantity`` of ``sku``: decrement both reserved and on-hand.\"\"\"\n        ...\n    def __contains__(self, sku: object) -> bool:\n        ...\n    def __len__(self) -> int:\n        \"\"\"Return the number of SKUs with positive on-hand stock.\"\"\"\n        ...\n    def __iter__(self) -> Iterator[str]:\n        \"\"\"Iterate over SKUs with positive on-hand stock, in sorted order.\"\"\"\n        ...\n```",
+      "reply": "```python\ndef __contains__(self, sku: object) -> bool:\n    \"\"\"Return whether ``sku`` normalises to a SKU with positive on-hand stock.\"\"\"\n    if not isinstance(sku, str):\n        return False\n    try:\n        sku = self._require_sku(sku)\n    except UnknownSKUError:\n        return False\n    return self._on_hand.get(sku, 0) > 0\n```",
+      "code": "def __contains__(self, sku: object) -> bool:\n    \"\"\"Return whether ``sku`` normalises to a SKU with positive on-hand stock.\"\"\"\n    if not isinstance(sku, str):\n        return False\n    try:\n        sku = self._require_sku(sku)\n    except UnknownSKUError:\n        return False\n    return self._on_hand.get(sku, 0) > 0",
+      "seconds": 11.6,
+      "tokens": {
+        "prompt": 942,
+        "completion": 802
+      },
+      "written": true
+    },
+    {
+      "method": "Warehouse.stock_report",
+      "file": "playground/playground/inventory.py",
+      "retrieved": [
+        {
+          "id": "playground/playground/inventory.py::Warehouse.receive",
+          "score": 0.882
+        },
+        {
+          "id": "playground/playground/inventory.py::Warehouse",
+          "score": 0.858
+        },
+        {
+          "id": "playground/playground/inventory.py::InventoryLedger",
+          "score": 0.846
+        },
+        {
+          "id": "playground/playground/inventory.py::InventoryLedger.available",
+          "score": 0.845
+        },
+        {
+          "id": "playground/playground/inventory.py::InventoryLedger.reserve",
+          "score": 0.841
+        }
+      ],
+      "prompt": "## Task\n# file: playground/playground/inventory.py | class: Warehouse\nImplement the method `stock_report` of class `Warehouse` in `playground/playground/inventory.py`.\nDocstring: Return a mapping of SKU to available quantity.\n\n## Retrieved context\n### Context 1 (playground/playground/inventory.py::Warehouse.receive)\n```python\n# file: playground/playground/inventory.py | class: Warehouse\nclass Warehouse(Entity):\n    def receive(self, sku: str, quantity: int) -> int:\n        \"\"\"Add stock to the warehouse ledger; return the new on-hand total.\"\"\"\n        return self._ledger.add_stock(sku, quantity)\n```\n\n### Context 2 (playground/playground/inventory.py::Warehouse)\n```python\n# file: playground/playground/inventory.py | class: Warehouse\nclass Warehouse(Entity):\n    \"\"\"Named location owning an :class:`InventoryLedger`.\"\"\"\n    def __init__(self, warehouse_id: str, name: str, ledger: InventoryLedger) -> None:\n        \"\"\"Create a warehouse with the given id, name, and ledger.\"\"\"\n        ...\n    def identity(self) -> str:\n        \"\"\"Return the warehouse_id as the entity identity.\"\"\"\n        ...\n    @property\n    def ledger(self) -> InventoryLedger:\n        \"\"\"Return the warehouse inventory ledger.\"\"\"\n        ...\n    def receive(self, sku: str, quantity: int) -> int:\n        \"\"\"Add stock to the warehouse ledger; return the new on-hand total.\"\"\"\n        ...\n    def stock_report(self) -> Dict[str, int]:\n        ...\n    def __repr__(self) -> str:\n        \"\"\"Return a developer-friendly representation.\"\"\"\n        ...\n```\n\n### Context 3 (playground/playground/inventory.py::InventoryLedger)\n```python\n# file: playground/playground/inventory.py | class: InventoryLedger\nclass InventoryLedger:\n    \"\"\"Tracks on-hand and reserved quantities per SKU.\"\"\"\n    def __init__(self, product_repo: Repository) -> None:\n        \"\"\"Create a ledger backed by ``product_repo`` for SKU validation.\"\"\"\n        ...\n    def _require_sku(self, sku: str) -> str:\n        \"\"\"Normalise ``sku`` and raise ``UnknownSKUError`` if it is unregistered.\"\"\"\n        ...\n    def add_stock(self, sku: str, quantity: int) -> int:\n        \"\"\"Add ``quantity`` to on-hand stock for ``sku``; return the new total.\"\"\"\n        ...\n    def available(self, sku: str) -> int:\n        \"\"\"Return on-hand minus reserved for ``sku``.\"\"\"\n        ...\n    def reserve(self, sku: str, quantity: int) -> ReservationContext:\n        \"\"\"Reserve ``quantity`` of ``sku`` and return a context that can commit or release it.\"\"\"\n        ...\n    def release(self, sku: str, quantity: int) -> None:\n        \"\"\"Release ``quantity`` previously reserved for ``sku``.\"\"\"\n        ...\n    def commit(self, sku: str, quantity: int) -> None:\n        \"\"\"Commit ``quantity`` of ``sku``: decrement both reserved and on-hand.\"\"\"\n        ...\n    def __contains__(self, sku: object) -> bool:\n        ...\n    def __len__(self) -> int:\n        \"\"\"Return the number of SKUs with positive on-hand stock.\"\"\"\n        ...\n    def __iter__(self) -> Iterator[str]:\n        \"\"\"Iterate over SKUs with positive on-hand stock, in sorted order.\"\"\"\n        ...\n```\n\n### Context 4 (playground/playground/inventory.py::InventoryLedger.available)\n```python\n# file: playground/playground/inventory.py | class: InventoryLedger\nclass InventoryLedger:\n    def available(self, sku: str) -> int:\n        \"\"\"Return on-hand minus reserved for ``sku``.\"\"\"\n        sku = self._require_sku(sku)\n        return self._on_hand.get(sku, 0) - self._reserved.get(sku, 0)\n```\n\n### Context 5 (playground/playground/inventory.py::InventoryLedger.reserve)\n```python\n# file: playground/playground/inventory.py | class: InventoryLedger\nclass InventoryLedger:\n    def reserve(self, sku: str, quantity: int) -> ReservationContext:\n        \"\"\"Reserve ``quantity`` of ``sku`` and return a context that can commit or release it.\"\"\"\n        quantity = ensure_positive_int(quantity, \"quantity\")\n        sku = self._require_sku(sku)\n        avail = self.available(sku)\n        if quantity > avail:\n            raise OutOfStockError(sku, quantity, avail)\n        self._reserved[sku] = self._reserved.get(sku, 0) + quantity\n        return ReservationContext(self, sku, quantity)\n```",
+      "reply": "```python\ndef stock_report(self) -> Dict[str, int]:\n    \"\"\"Return a mapping of SKU to available quantity.\"\"\"\n    return {sku: self._ledger.available(sku) for sku in self._ledger}\n```",
+      "code": "def stock_report(self) -> Dict[str, int]:\n    \"\"\"Return a mapping of SKU to available quantity.\"\"\"\n    return {sku: self._ledger.available(sku) for sku in self._ledger}",
+      "seconds": 9.9,
+      "tokens": {
+        "prompt": 1080,
+        "completion": 566
+      },
+      "written": true
+    },
+    {
+      "method": "OrderStateMachine.transition",
+      "file": "playground/playground/orders.py",
+      "retrieved": [
+        {
+          "id": "playground/playground/orders.py::OrderStateMachine.__call__",
+          "score": 0.913
+        },
+        {
+          "id": "playground/playground/orders.py::OrderStateMachine.can_transition",
+          "score": 0.905
+        },
+        {
+          "id": "playground/playground/orders.py::Order.advance",
+          "score": 0.894
+        },
+        {
+          "id": "playground/playground/orders.py::OrderStateMachine",
+          "score": 0.887
+        },
+        {
+          "id": "playground/playground/orders.py::OrderStateMachine.allowed_from",
+          "score": 0.865
+        }
+      ],
+      "prompt": "## Task\n# file: playground/playground/orders.py | class: OrderStateMachine\nImplement the method `transition` of class `OrderStateMachine` in `playground/playground/orders.py`.\nDocstring: Return ``target`` if the transition is allowed, else raise.\n\n## Retrieved context\n### Context 1 (playground/playground/orders.py::OrderStateMachine.__call__)\n```python\n# file: playground/playground/orders.py | class: OrderStateMachine\nclass OrderStateMachine:\n    def __call__(self, source: OrderStatus, target: OrderStatus) -> OrderStatus:\n        \"\"\"Convenience alias for :meth:`transition`.\"\"\"\n        return self.transition(source, target)\n```\n\n### Context 2 (playground/playground/orders.py::OrderStateMachine.can_transition)\n```python\n# file: playground/playground/orders.py | class: OrderStateMachine\nclass OrderStateMachine:\n    def can_transition(self, source: OrderStatus, target: OrderStatus) -> bool:\n        \"\"\"Return whether ``target`` is reachable from ``source``.\"\"\"\n        return target in OrderStateMachine.allowed_from(source)\n```\n\n### Context 3 (playground/playground/orders.py::Order.advance)\n```python\n# file: playground/playground/orders.py | class: Order\nclass Order:\n    def advance(self, target: OrderStatus) -> None:\n        \"\"\"Transition the order to ``target`` status, raising if not allowed.\"\"\"\n        new_status = self._machine.transition(self._status, target)\n        self._status = new_status\n```\n\n### Context 4 (playground/playground/orders.py::OrderStateMachine)\n```python\n# file: playground/playground/orders.py | class: OrderStateMachine\nclass OrderStateMachine:\n    \"\"\"Legal OrderStatus transitions, data-driven via TRANSITIONS.\"\"\"\n    TRANSITIONS: Dict[OrderStatus, FrozenSet[OrderStatus]] = {\n        OrderStatus.NEW: frozenset({OrderStatus.RESERVED, OrderStatus.CANCELLED}),\n        OrderStatus.RESERVED: frozenset({OrderStatus.SHIPPED, OrderStatus.CANCELLED}),\n        OrderStatus.SHIPPED: frozenset(),\n        OrderStatus.CANCELLED: frozenset(),\n    }\n    @staticmethod\n    def allowed_from(status: OrderStatus) -> FrozenSet[OrderStatus]:\n        \"\"\"Return the set of statuses reachable from ``status``.\"\"\"\n        ...\n    def can_transition(self, source: OrderStatus, target: OrderStatus) -> bool:\n        \"\"\"Return whether ``target`` is reachable from ``source``.\"\"\"\n        ...\n    def transition(self, source: OrderStatus, target: OrderStatus) -> OrderStatus:\n        ...\n    def __call__(self, source: OrderStatus, target: OrderStatus) -> OrderStatus:\n        \"\"\"Convenience alias for :meth:`transition`.\"\"\"\n        ...\n```\n\n### Context 5 (playground/playground/orders.py::OrderStateMachine.allowed_from)\n```python\n# file: playground/playground/orders.py | class: OrderStateMachine\nclass OrderStateMachine:\n    @staticmethod\n    def allowed_from(status: OrderStatus) -> FrozenSet[OrderStatus]:\n        \"\"\"Return the set of statuses reachable from ``status``.\"\"\"\n        if not isinstance(status, OrderStatus):\n            raise TypeError(\"status must be OrderStatus\")\n        return OrderStateMachine.TRANSITIONS[status]\n```",
+      "reply": "```python\ndef transition(self, source: OrderStatus, target: OrderStatus) -> OrderStatus:\n    \"\"\"Return ``target`` if the transition is allowed, else raise.\"\"\"\n    if not isinstance(target, OrderStatus):\n        raise TypeError(\"target must be OrderStatus\")\n    if self.can_transition(source, target):\n        return target\n    raise ValueError(f\"cannot transition from {source} to {target}\")\n```",
+      "code": "def transition(self, source: OrderStatus, target: OrderStatus) -> OrderStatus:\n    \"\"\"Return ``target`` if the transition is allowed, else raise.\"\"\"\n    if not isinstance(target, OrderStatus):\n        raise TypeError(\"target must be OrderStatus\")\n    if self.can_transition(source, target):\n        return target\n    raise ValueError(f\"cannot transition from {source} to {target}\")",
+      "seconds": 6.9,
+      "tokens": {
+        "prompt": 803,
+        "completion": 607
+      },
+      "written": true
+    },
+    {
+      "method": "OrderLog.by_status",
+      "file": "playground/playground/orders.py",
+      "retrieved": [
+        {
+          "id": "playground/playground/orders.py::OrderLog.__iter__",
+          "score": 0.866
+        },
+        {
+          "id": "playground/playground/orders.py::OrderLog",
+          "score": 0.849
+        },
+        {
+          "id": "playground/tests/test_orders.py::OrderLogTests.test_by_status_is_lazy_generator",
+          "score": 0.848
+        },
+        {
+          "id": "playground/tests/test_orders.py::OrderLogTests.test_by_status_non_status_raises_on_first_next",
+          "score": 0.845
+        },
+        {
+          "id": "playground/playground/orders.py::Order.status",
+          "score": 0.844
+        }
+      ],
+      "prompt": "## Task\n# file: playground/playground/orders.py | class: OrderLog\nImplement the method `by_status` of class `OrderLog` in `playground/playground/orders.py`.\nDocstring: Yield orders whose status matches ``status``.\n\n## Retrieved context\n### Context 1 (playground/playground/orders.py::OrderLog.__iter__)\n```python\n# file: playground/playground/orders.py | class: OrderLog\nclass OrderLog:\n    def __iter__(self) -> Iterator[Order]:\n        \"\"\"Iterate over the logged orders.\"\"\"\n        yield from list(self._orders)\n```\n\n### Context 2 (playground/playground/orders.py::OrderLog)\n```python\n# file: playground/playground/orders.py | class: OrderLog\nclass OrderLog:\n    \"\"\"Ordered, deduplicated record of orders; iterable.\"\"\"\n    def __init__(self) -> None:\n        \"\"\"Create an empty order log.\"\"\"\n        ...\n    def record(self, order: Order) -> None:\n        \"\"\"Append ``order``; raises if an order with the same id is already logged.\"\"\"\n        ...\n    def by_status(self, status: OrderStatus) -> Iterator[Order]:\n        ...\n    def __getitem__(self, index: int) -> Order:\n        \"\"\"Return the order at ``index``.\"\"\"\n        ...\n    def __len__(self) -> int:\n        \"\"\"Return the number of logged orders.\"\"\"\n        ...\n    def __iter__(self) -> Iterator[Order]:\n        \"\"\"Iterate over the logged orders.\"\"\"\n        ...\n```\n\n### Context 3 (playground/tests/test_orders.py::OrderLogTests.test_by_status_is_lazy_generator)\n```python\n# file: playground/tests/test_orders.py | class: OrderLogTests\nclass OrderLogTests(unittest.TestCase):\n    def test_by_status_is_lazy_generator(self) -> None:\n        gen = self.log.by_status(OrderStatus.NEW)\n        self.assertFalse(hasattr(gen, \"__len__\"))\n        self.assertEqual(list(gen), [])\n```\n\n### Context 4 (playground/tests/test_orders.py::OrderLogTests.test_by_status_non_status_raises_on_first_next)\n```python\n# file: playground/tests/test_orders.py | class: OrderLogTests\nclass OrderLogTests(unittest.TestCase):\n    def test_by_status_non_status_raises_on_first_next(self) -> None:\n        gen = self.log.by_status(\"new\")  # type: ignore[arg-type]\n        with self.assertRaises(TypeError):\n            next(gen)\n```\n\n### Context 5 (playground/playground/orders.py::Order.status)\n```python\n# file: playground/playground/orders.py | class: Order\nclass Order:\n    @property\n    def status(self) -> OrderStatus:\n        \"\"\"Return the current order status.\"\"\"\n        return self._status\n```",
+      "reply": "```python\ndef by_status(self, status: OrderStatus) -> Iterator[Order]:\n    \"\"\"Yield orders whose status matches ``status``.\"\"\"\n    def _gen() -> Iterator[Order]:\n        if not isinstance(status, OrderStatus):\n            raise TypeError(\"status must be an OrderStatus\")\n        for order in self:\n            if order.status == status:\n                yield order\n    return _gen()\n```",
+      "code": "def by_status(self, status: OrderStatus) -> Iterator[Order]:\n    \"\"\"Yield orders whose status matches ``status``.\"\"\"\n    def _gen() -> Iterator[Order]:\n        if not isinstance(status, OrderStatus):\n            raise TypeError(\"status must be an OrderStatus\")\n        for order in self:\n            if order.status == status:\n                yield order\n    return _gen()",
+      "seconds": 15.6,
+      "tokens": {
+        "prompt": 688,
+        "completion": 604
+      },
+      "written": true
+    },
+    {
+      "method": "Customer.can_afford",
+      "file": "playground/playground/models.py",
+      "retrieved": [
+        {
+          "id": "playground/playground/models.py::Customer.charge",
+          "score": 0.888
+        },
+        {
+          "id": "playground/tests/test_models.py::CustomerTests.test_can_afford_true_within_limit",
+          "score": 0.867
+        },
+        {
+          "id": "playground/tests/test_models.py::CustomerTests.test_can_afford_false_over_limit",
+          "score": 0.863
+        },
+        {
+          "id": "playground/playground/models.py::Customer",
+          "score": 0.855
+        },
+        {
+          "id": "playground/tests/test_models.py::CustomerTests.test_can_afford_accounts_for_existing_balance",
+          "score": 0.855
+        }
+      ],
+      "prompt": "## Task\n# file: playground/playground/models.py | class: Customer\nImplement the method `can_afford` of class `Customer` in `playground/playground/models.py`.\nDocstring: Return True if ``balance + total`` does not exceed the credit limit.\n\n## Retrieved context\n### Context 1 (playground/playground/models.py::Customer.charge)\n```python\n# file: playground/playground/models.py | class: Customer\nclass Customer(Entity):\n    def charge(self, total: Money) -> None:\n        \"\"\"Increase the balance by ``total``, raising if the limit would be exceeded.\"\"\"\n        if not self.can_afford(total):\n            raise ValueError(\"credit limit exceeded\")\n        self._balance = self._balance + total\n```\n\n### Context 2 (playground/tests/test_models.py::CustomerTests.test_can_afford_true_within_limit)\n```python\n# file: playground/tests/test_models.py | class: CustomerTests\nclass CustomerTests(unittest.TestCase):\n    def test_can_afford_true_within_limit(self) -> None:\n        c = Customer(\"C-1\", \"A\", Money(1000))\n        self.assertTrue(c.can_afford(Money(1000)))\n```\n\n### Context 3 (playground/tests/test_models.py::CustomerTests.test_can_afford_false_over_limit)\n```python\n# file: playground/tests/test_models.py | class: CustomerTests\nclass CustomerTests(unittest.TestCase):\n    def test_can_afford_false_over_limit(self) -> None:\n        c = Customer(\"C-1\", \"A\", Money(1000))\n        self.assertFalse(c.can_afford(Money(1001)))\n```\n\n### Context 4 (playground/playground/models.py::Customer)\n```python\n# file: playground/playground/models.py | class: Customer\nclass Customer(Entity):\n    \"\"\"Buyer with a credit limit. Balance is the amount owed.\"\"\"\n    def __init__(self, customer_id: str, name: str, credit_limit: Money = Money(0)) -> None:\n        \"\"\"Create a customer with the given identity, name, and credit limit.\"\"\"\n        ...\n    @property\n    def customer_id(self) -> str:\n        \"\"\"Return the customer identity.\"\"\"\n        ...\n    @property\n    def name(self) -> str:\n        \"\"\"Return the customer name.\"\"\"\n        ...\n    @property\n    def credit_limit(self) -> Money:\n        \"\"\"Return the credit limit.\"\"\"\n        ...\n    @property\n    def balance(self) -> Money:\n        \"\"\"Return the current outstanding balance.\"\"\"\n        ...\n    def identity(self) -> str:\n        \"\"\"Return the customer_id as the entity identity.\"\"\"\n        ...\n    def can_afford(self, total: Money) -> bool:\n        ...\n    def charge(self, total: Money) -> None:\n        \"\"\"Increase the balance by ``total``, raising if the limit would be exceeded.\"\"\"\n        ...\n```\n\n### Context 5 (playground/tests/test_models.py::CustomerTests.test_can_afford_accounts_for_existing_balance)\n```python\n# file: playground/tests/test_models.py | class: CustomerTests\nclass CustomerTests(unittest.TestCase):\n    def test_can_afford_accounts_for_existing_balance(self) -> None:\n        c = Customer(\"C-1\", \"A\", Money(1000))\n        c.charge(Money(600))\n        self.assertTrue(c.can_afford(Money(400)))\n        self.assertFalse(c.can_afford(Money(401)))\n```",
+      "reply": "```python\ndef can_afford(self, total: Money) -> bool:\n    \"\"\"Return True if ``balance + total`` does not exceed the credit limit.\"\"\"\n    return (self.balance + total) <= self.credit_limit\n```",
+      "code": "def can_afford(self, total: Money) -> bool:\n    \"\"\"Return True if ``balance + total`` does not exceed the credit limit.\"\"\"\n    return (self.balance + total) <= self.credit_limit",
+      "seconds": 8.2,
+      "tokens": {
+        "prompt": 828,
+        "completion": 504
+      },
+      "written": true
+    },
+    {
+      "method": "Order.__len__",
+      "file": "playground/playground/orders.py",
+      "retrieved": [
+        {
+          "id": "playground/playground/orders.py::OrderBuilder.__len__",
+          "score": 0.889
+        },
+        {
+          "id": "playground/playground/orders.py::OrderLog.__len__",
+          "score": 0.883
+        },
+        {
+          "id": "playground/playground/orders.py::Order.items",
+          "score": 0.846
+        },
+        {
+          "id": "playground/playground/orders.py::OrderLog.__getitem__",
+          "score": 0.841
+        },
+        {
+          "id": "playground/playground/orders.py::OrderBuilder.__bool__",
+          "score": 0.839
+        }
+      ],
+      "prompt": "## Task\n# file: playground/playground/orders.py | class: Order\nImplement the method `__len__` of class `Order` in `playground/playground/orders.py`.\nDocstring: Return the number of line items.\n\n## Retrieved context\n### Context 1 (playground/playground/orders.py::OrderBuilder.__len__)\n```python\n# file: playground/playground/orders.py | class: OrderBuilder\nclass OrderBuilder:\n    def __len__(self) -> int:\n        \"\"\"Return the number of recorded lines.\"\"\"\n        return len(self._lines)\n```\n\n### Context 2 (playground/playground/orders.py::OrderLog.__len__)\n```python\n# file: playground/playground/orders.py | class: OrderLog\nclass OrderLog:\n    def __len__(self) -> int:\n        \"\"\"Return the number of logged orders.\"\"\"\n        return len(self._orders)\n```\n\n### Context 3 (playground/playground/orders.py::Order.items)\n```python\n# file: playground/playground/orders.py | class: Order\nclass Order:\n    @property\n    def items(self) -> Tuple[LineItem, ...]:\n        \"\"\"Return a tuple copy of the order's line items.\"\"\"\n        return tuple(self._items)\n```\n\n### Context 4 (playground/playground/orders.py::OrderLog.__getitem__)\n```python\n# file: playground/playground/orders.py | class: OrderLog\nclass OrderLog:\n    def __getitem__(self, index: int) -> Order:\n        \"\"\"Return the order at ``index``.\"\"\"\n        return self._orders[index]\n```\n\n### Context 5 (playground/playground/orders.py::OrderBuilder.__bool__)\n```python\n# file: playground/playground/orders.py | class: OrderBuilder\nclass OrderBuilder:\n    def __bool__(self) -> bool:\n        \"\"\"Return True when at least one line has been recorded.\"\"\"\n        return len(self) > 0\n```",
+      "reply": "```python\ndef __len__(self) -> int:\n    \"\"\"Return the number of line items.\"\"\"\n    return len(self._items)\n```",
+      "code": "def __len__(self) -> int:\n    \"\"\"Return the number of line items.\"\"\"\n    return len(self._items)",
+      "seconds": 4.4,
+      "tokens": {
+        "prompt": 515,
+        "completion": 166
+      },
+      "written": true
+    },
+    {
+      "method": "BulkDiscountPricing.price",
+      "file": "playground/playground/pricing.py",
+      "retrieved": [
+        {
+          "id": "playground/playground/pricing.py::BulkDiscountPricing.percent_off",
+          "score": 0.903
+        },
+        {
+          "id": "playground/playground/pricing.py::BulkDiscountPricing.__repr__",
+          "score": 0.903
+        },
+        {
+          "id": "playground/playground/pricing.py::BulkDiscountPricing",
+          "score": 0.901
+        },
+        {
+          "id": "playground/playground/pricing.py::BulkDiscountPricing.__init__",
+          "score": 0.893
+        },
+        {
+          "id": "playground/playground/pricing.py::BulkDiscountPricing.threshold",
+          "score": 0.879
+        }
+      ],
+      "prompt": "## Task\n# file: playground/playground/pricing.py | class: BulkDiscountPricing\nImplement the method `price` of class `BulkDiscountPricing` in `playground/playground/pricing.py`.\nDocstring: Return the base price, less the discount if the quantity qualifies.\n\n## Retrieved context\n### Context 1 (playground/playground/pricing.py::BulkDiscountPricing.percent_off)\n```python\n# file: playground/playground/pricing.py | class: BulkDiscountPricing\nclass BulkDiscountPricing(PricingStrategy):\n    @property\n    def percent_off(self) -> int:\n        \"\"\"Return the discount percentage.\"\"\"\n        return self._percent_off\n```\n\n### Context 2 (playground/playground/pricing.py::BulkDiscountPricing.__repr__)\n```python\n# file: playground/playground/pricing.py | class: BulkDiscountPricing\nclass BulkDiscountPricing(PricingStrategy):\n    def __repr__(self) -> str:\n        \"\"\"Return a developer-friendly representation.\"\"\"\n        return f\"BulkDiscountPricing(threshold={self._threshold}, percent_off={self._percent_off})\"\n```\n\n### Context 3 (playground/playground/pricing.py::BulkDiscountPricing)\n```python\n# file: playground/playground/pricing.py | class: BulkDiscountPricing\nclass BulkDiscountPricing(PricingStrategy):\n    \"\"\"Wraps another strategy; applies a percent discount when total quantity meets a threshold.\"\"\"\n    def __init__(self, base: PricingStrategy, threshold: int, percent_off: int) -> None:\n        \"\"\"Create a strategy that discounts ``base`` totals above ``threshold`` quantity.\"\"\"\n        ...\n    @property\n    def threshold(self) -> int:\n        \"\"\"Return the qualifying total quantity.\"\"\"\n        ...\n    @property\n    def percent_off(self) -> int:\n        \"\"\"Return the discount percentage.\"\"\"\n        ...\n    def price(self, items: Sequence[LineItem]) -> Money:\n        ...\n    def __repr__(self) -> str:\n        \"\"\"Return a developer-friendly representation.\"\"\"\n        ...\n```\n\n### Context 4 (playground/playground/pricing.py::BulkDiscountPricing.__init__)\n```python\n# file: playground/playground/pricing.py | class: BulkDiscountPricing\nclass BulkDiscountPricing(PricingStrategy):\n    def __init__(self, base: PricingStrategy, threshold: int, percent_off: int) -> None:\n        \"\"\"Create a strategy that discounts ``base`` totals above ``threshold`` quantity.\"\"\"\n        if not isinstance(base, PricingStrategy):\n            raise TypeError(\"base must be PricingStrategy\")\n        threshold = ensure_positive_int(threshold, \"threshold\")\n        if isinstance(percent_off, bool) or not isinstance(percent_off, int):\n            raise TypeError(\"percent_off must be int\")\n        if percent_off < 0 or percent_off > 100:\n            raise ValueError(\"percent_off must be 0..100\")\n        self._base = base\n        self._threshold = threshold\n        self._percent_off = percent_off\n```\n\n### Context 5 (playground/playground/pricing.py::BulkDiscountPricing.threshold)\n```python\n# file: playground/playground/pricing.py | class: BulkDiscountPricing\nclass BulkDiscountPricing(PricingStrategy):\n    @property\n    def threshold(self) -> int:\n        \"\"\"Return the qualifying total quantity.\"\"\"\n        return self._threshold\n```",
+      "reply": "```python\ndef price(self, items: Sequence[LineItem]) -> Money:\n    \"\"\"Return the base price, less the discount if the quantity qualifies.\"\"\"\n    total_qty = sum(item.quantity for item in items)\n    base_total = self._base.price(items)\n    if total_qty < self._threshold or self._percent_off == 0:\n        return base_total\n    discount = base_total * (self._percent_off / 100)\n    return base_total - discount\n```",
+      "code": "def price(self, items: Sequence[LineItem]) -> Money:\n    \"\"\"Return the base price, less the discount if the quantity qualifies.\"\"\"\n    total_qty = sum(item.quantity for item in items)\n    base_total = self._base.price(items)\n    if total_qty < self._threshold or self._percent_off == 0:\n        return base_total\n    discount = base_total * (self._percent_off / 100)\n    return base_total - discount",
+      "seconds": 12.7,
+      "tokens": {
+        "prompt": 806,
+        "completion": 940
+      },
+      "written": true
+    },
+    {
+      "method": "EventBus.__contains__",
+      "file": "playground/playground/events.py",
+      "retrieved": [
+        {
+          "id": "playground/playground/events.py::EventBus.subscribe",
+          "score": 0.865
+        },
+        {
+          "id": "playground/tests/test_events.py::EventBusContainsTests",
+          "score": 0.858
+        },
+        {
+          "id": "playground/tests/test_events.py::EventBusContainsTests.test_contains_false_without_handlers",
+          "score": 0.856
+        },
+        {
+          "id": "playground/playground/events.py::EventBus",
+          "score": 0.854
+        },
+        {
+          "id": "playground/tests/test_events.py::EventBusContainsTests.test_contains_true_with_handler",
+          "score": 0.852
+        }
+      ],
+      "prompt": "## Task\n# file: playground/playground/events.py | class: EventBus\nImplement the method `__contains__` of class `EventBus` in `playground/playground/events.py`.\nDocstring: Return whether any handlers are registered for ``event_type``.\n\n## Retrieved context\n### Context 1 (playground/playground/events.py::EventBus.subscribe)\n```python\n# file: playground/playground/events.py | class: EventBus\nclass EventBus:\n    def subscribe(self, event_type: EventType, handler: Callable[..., None]) -> None:\n        \"\"\"Register ``handler`` to be called when ``event_type`` is published.\"\"\"\n        if not isinstance(event_type, EventType):\n            raise TypeError(\"event_type must be EventType\")\n        if not callable(handler):\n            raise TypeError(\"handler must be callable\")\n        self._handlers.setdefault(event_type, []).append(handler)\n```\n\n### Context 2 (playground/tests/test_events.py::EventBusContainsTests)\n```python\n# file: playground/tests/test_events.py | class: EventBusContainsTests\nclass EventBusContainsTests(unittest.TestCase):\n    def test_contains_false_without_handlers(self) -> None:\n        ...\n    def test_contains_true_with_handler(self) -> None:\n        ...\n    def test_contains_false_after_all_unsubscribed(self) -> None:\n        ...\n    def test_contains_non_event_type_is_false(self) -> None:\n        ...\n```\n\n### Context 3 (playground/tests/test_events.py::EventBusContainsTests.test_contains_false_without_handlers)\n```python\n# file: playground/tests/test_events.py | class: EventBusContainsTests\nclass EventBusContainsTests(unittest.TestCase):\n    def test_contains_false_without_handlers(self) -> None:\n        self.assertNotIn(EventType.ORDER_SHIPPED, EventBus())\n```\n\n### Context 4 (playground/playground/events.py::EventBus)\n```python\n# file: playground/playground/events.py | class: EventBus\nclass EventBus:\n    \"\"\"Synchronous publish/subscribe keyed by :class:`EventType`.\"\"\"\n    def __init__(self) -> None:\n        \"\"\"Initialise an empty handler registry.\"\"\"\n        ...\n    def subscribe(self, event_type: EventType, handler: Callable[..., None]) -> None:\n        \"\"\"Register ``handler`` to be called when ``event_type`` is published.\"\"\"\n        ...\n    def unsubscribe(self, event_type: EventType, handler: Callable[..., None]) -> bool:\n        \"\"\"Remove ``handler`` from ``event_type``; return whether it was present.\"\"\"\n        ...\n    def publish(self, event_type: EventType, payload: Mapping[str, object]) -> int:\n        \"\"\"Invoke every handler subscribed to ``event_type`` with ``payload``.\"\"\"\n        ...\n    def __len__(self) -> int:\n        \"\"\"Return the total number of registered handlers across all event types.\"\"\"\n        ...\n    def __contains__(self, event_type: object) -> bool:\n        ...\n```\n\n### Context 5 (playground/tests/test_events.py::EventBusContainsTests.test_contains_true_with_handler)\n```python\n# file: playground/tests/test_events.py | class: EventBusContainsTests\nclass EventBusContainsTests(unittest.TestCase):\n    def test_contains_true_with_handler(self) -> None:\n        bus = EventBus()\n        bus.subscribe(EventType.ORDER_SHIPPED, lambda p: None)\n        self.assertIn(EventType.ORDER_SHIPPED, bus)\n```",
+      "reply": "```python\ndef __contains__(self, event_type: object) -> bool:\n    \"\"\"Return whether any handlers are registered for ``event_type``.\"\"\"\n    if not isinstance(event_type, EventType):\n        return False\n    return bool(self._handlers.get(event_type))\n```",
+      "code": "def __contains__(self, event_type: object) -> bool:\n    \"\"\"Return whether any handlers are registered for ``event_type``.\"\"\"\n    if not isinstance(event_type, EventType):\n        return False\n    return bool(self._handlers.get(event_type))",
+      "seconds": 7.6,
+      "tokens": {
+        "prompt": 820,
+        "completion": 641
+      },
+      "written": true
+    },
+    {
+      "method": "Money.__bool__",
+      "file": "playground/playground/models.py",
+      "retrieved": [
+        {
+          "id": "playground/playground/models.py::Money.__init__",
+          "score": 0.859
+        },
+        {
+          "id": "playground/playground/models.py::Money.__mul__",
+          "score": 0.859
+        },
+        {
+          "id": "playground/playground/models.py::Money.__eq__",
+          "score": 0.857
+        },
+        {
+          "id": "playground/playground/models.py::Money.__lt__",
+          "score": 0.853
+        },
+        {
+          "id": "playground/playground/models.py::Money",
+          "score": 0.852
+        }
+      ],
+      "prompt": "## Task\n# file: playground/playground/models.py | class: Money\nImplement the method `__bool__` of class `Money` in `playground/playground/models.py`.\nDocstring: Return True when the amount is non-zero.\n\n## Retrieved context\n### Context 1 (playground/playground/models.py::Money.__init__)\n```python\n# file: playground/playground/models.py | class: Money\nclass Money:\n    def __init__(self, cents: int = 0) -> None:\n        \"\"\"Create a monetary amount; cents must be a non-negative ``int``.\"\"\"\n        if isinstance(cents, bool) or not isinstance(cents, int):\n            raise TypeError(\"cents must be int\")\n        if cents < 0:\n            raise ValueError(\"money cannot be negative\")\n        self._cents = cents\n```\n\n### Context 2 (playground/playground/models.py::Money.__mul__)\n```python\n# file: playground/playground/models.py | class: Money\nclass Money:\n    def __mul__(self, factor: int) -> Money:\n        \"\"\"Return ``self`` multiplied by a non-negative integer.\"\"\"\n        if isinstance(factor, bool) or not isinstance(factor, int):\n            raise TypeError(\"factor must be int\")\n        if factor < 0:\n            raise ValueError(\"factor cannot be negative\")\n        return Money(self._cents * factor)\n```\n\n### Context 3 (playground/playground/models.py::Money.__eq__)\n```python\n# file: playground/playground/models.py | class: Money\nclass Money:\n    def __eq__(self, other: object) -> bool:\n        \"\"\"Return True if ``other`` is Money with equal cents.\"\"\"\n        if not isinstance(other, Money):\n            return NotImplemented\n        return self._cents == other._cents\n```\n\n### Context 4 (playground/playground/models.py::Money.__lt__)\n```python\n# file: playground/playground/models.py | class: Money\nclass Money:\n    def __lt__(self, other: Money) -> bool:\n        \"\"\"Return True if ``self`` is strictly less than ``other``.\"\"\"\n        if not isinstance(other, Money):\n            return NotImplemented\n        return self._cents < other._cents\n```\n\n### Context 5 (playground/playground/models.py::Money)\n```python\n# file: playground/playground/models.py | class: Money\nclass Money:\n    \"\"\"Immutable integer-cents amount.\"\"\"\n    def __init__(self, cents: int = 0) -> None:\n        \"\"\"Create a monetary amount; cents must be a non-negative ``int``.\"\"\"\n        ...\n    @property\n    def cents(self) -> int:\n        \"\"\"Return the stored cents value.\"\"\"\n        ...\n    def __add__(self, other: Money) -> Money:\n        \"\"\"Return a new Money equal to ``self + other``.\"\"\"\n        ...\n    def __sub__(self, other: Money) -> Money:\n        \"\"\"Return a new Money equal to ``self - other``.\"\"\"\n        ...\n    def __mul__(self, factor: int) -> Money:\n        \"\"\"Return ``self`` multiplied by a non-negative integer.\"\"\"\n        ...\n    def __rmul__(self, factor: int) -> Money:\n        \"\"\"Support ``factor * Money`` by delegating to :meth:`__mul__`.\"\"\"\n        ...\n    def __eq__(self, other: object) -> bool:\n        \"\"\"Return True if ``other`` is Money with equal cents.\"\"\"\n        ...\n    def __lt__(self, other: Money) -> bool:\n        \"\"\"Return True if ``self`` is strictly less than ``other``.\"\"\"\n        ...\n    def __le__(self, other: Money) -> bool:\n        \"\"\"Return True if ``self`` is less than or equal to ``other``.\"\"\"\n        ...\n    def __hash__(self) -> int:\n        \"\"\"Hash by the type name and cents value.\"\"\"\n        ...\n    def __repr__(self) -> str:\n        \"\"\"Return a developer-friendly representation.\"\"\"\n        ...\n    def __str__(self) -> str:\n        \"\"\"Render the amount as a ``$X.YY`` string.\"\"\"\n        ...\n    def __bool__(self) -> bool:\n        ...\n```",
+      "reply": "```python\ndef __bool__(self) -> bool:\n    \"\"\"Return True when the amount is non-zero.\"\"\"\n    return self._cents != 0\n```",
+      "code": "def __bool__(self) -> bool:\n    \"\"\"Return True when the amount is non-zero.\"\"\"\n    return self._cents != 0",
+      "seconds": 5.5,
+      "tokens": {
+        "prompt": 996,
+        "completion": 235
+      },
+      "written": true
+    }
+  ],
+  "tests": {
+    "summary": "14 failed, 467 passed, 65 subtests passed in 1.08s",
+    "failed": 14,
+    "passed": 467
+  }
+}

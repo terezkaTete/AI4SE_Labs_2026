@@ -88,7 +88,8 @@ class Money:
         return format_cents(self._cents)
 
     def __bool__(self) -> bool:
-        pass
+        """Return True when the amount is non-zero."""
+        return self._cents != 0
 
 
 class Product(Entity):
@@ -259,7 +260,8 @@ class Customer(Entity):
         return self._customer_id
 
     def can_afford(self, total: Money) -> bool:
-        pass
+        """Return True if ``balance + total`` does not exceed the credit limit."""
+        return (self.balance + total) <= self.credit_limit
 
     def charge(self, total: Money) -> None:
         """Increase the balance by ``total``, raising if the limit would be exceeded."""

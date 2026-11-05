@@ -61,7 +61,13 @@ class BulkDiscountPricing(PricingStrategy):
         return self._percent_off
 
     def price(self, items: Sequence[LineItem]) -> Money:
-        pass
+        """Return the base price, less the discount if the quantity qualifies."""
+        total_qty = sum(item.quantity for item in items)
+        base_total = self._base.price(items)
+        if total_qty < self._threshold or self._percent_off == 0:
+            return base_total
+        discount = base_total * (self._percent_off / 100)
+        return base_total - discount
 
     def __repr__(self) -> str:
         """Return a developer-friendly representation."""

@@ -1,0 +1,397 @@
+............................................................ [ 12%]
+............................................................. [ 25%]
+........F..F............................................................ [ 40%]
+.................................................................... [ 54%]
+...........F.....F.............FF...F.F......................... [ 67%]
+........................................F.FF.FFF [ 77%]
+........................................................................ [ 92%]
+....................................                               [100%]
+=================================== FAILURES ===================================
+___ InventoryLedgerContainsLenIterTests.test_contains_malformed_string_false ___
+
+self = <tests.test_inventory.InventoryLedgerContainsLenIterTests testMethod=test_contains_malformed_string_false>
+
+    def test_contains_malformed_string_false(self) -> None:
+>       self.assertFalse("x" in self.ledger)
+                         ^^^^^^^^^^^^^^^^^^
+
+tests/test_inventory.py:217: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/inventory.py:76: in __contains__
+    sku = self._require_sku(sku)
+          ^^^^^^^^^^^^^^^^^^^^^^
+playground/inventory.py:25: in _require_sku
+    sku = normalize_sku(sku)
+          ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = 'x'
+
+    def normalize_sku(raw: str) -> str:
+        """Validate and normalise a SKU string.
+    
+        The value must be a :class:`str` of 3..16 characters containing only
+        uppercase ASCII letters, digits, or hyphens; leading/trailing whitespace
+        is stripped and the result is uppercased.
+    
+        Raises:
+            TypeError: if ``raw`` is not a string.
+            ValueError: if the length is out of range or contains invalid chars.
+        """
+        if not isinstance(raw, str):
+            raise TypeError("sku must be str")
+        s = raw.strip().upper()
+        if not (3 <= len(s) <= 16):
+>           raise ValueError("sku length must be 3..16")
+E           ValueError: sku length must be 3..16
+
+playground/util.py:28: ValueError
+_ InventoryLedgerContainsLenIterTests.test_contains_present_even_if_zero_on_hand_after_commit _
+
+self = <tests.test_inventory.InventoryLedgerContainsLenIterTests testMethod=test_contains_present_even_if_zero_on_hand_after_commit>
+
+    def test_contains_present_even_if_zero_on_hand_after_commit(self) -> None:
+        # Key remains in _on_hand after full commit, so __contains__ is True.
+        self.ledger.add_stock("EL-1001", 2)
+        self.ledger.reserve("EL-1001", 2)
+        self.ledger.commit("EL-1001", 2)
+>       self.assertTrue("EL-1001" in self.ledger)
+E       AssertionError: False is not true
+
+tests/test_inventory.py:232: AssertionError
+___________ OrderStateMachineTests.test_call_is_alias_for_transition ___________
+
+self = <tests.test_orders.OrderStateMachineTests testMethod=test_call_is_alias_for_transition>
+
+    def test_call_is_alias_for_transition(self) -> None:
+        sm = OrderStateMachine()
+        self.assertIs(sm(OrderStatus.RESERVED, OrderStatus.SHIPPED), OrderStatus.SHIPPED)
+        with self.assertRaises(InvalidTransitionError):
+>           sm(OrderStatus.SHIPPED, OrderStatus.NEW)
+
+tests/test_orders.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/orders.py:45: in __call__
+    return self.transition(source, target)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def transition(self, source: OrderStatus, target: OrderStatus) -> OrderStatus:
+        """Return ``target`` if the transition is allowed, else raise."""
+        if not isinstance(target, OrderStatus):
+            raise TypeError("target must be OrderStatus")
+        if self.can_transition(source, target):
+            return target
+>       raise ValueError(f"cannot transition from {source} to {target}")
+E       ValueError: cannot transition from OrderStatus.SHIPPED to OrderStatus.NEW
+
+playground/orders.py:41: ValueError
+____________ OrderStateMachineTests.test_transition_illegal_raises _____________
+
+self = <tests.test_orders.OrderStateMachineTests testMethod=test_transition_illegal_raises>
+
+    def test_transition_illegal_raises(self) -> None:
+        with self.assertRaises(InvalidTransitionError) as ctx:
+>           OrderStateMachine().transition(OrderStatus.NEW, OrderStatus.SHIPPED)
+
+tests/test_orders.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def transition(self, source: OrderStatus, target: OrderStatus) -> OrderStatus:
+        """Return ``target`` if the transition is allowed, else raise."""
+        if not isinstance(target, OrderStatus):
+            raise TypeError("target must be OrderStatus")
+        if self.can_transition(source, target):
+            return target
+>       raise ValueError(f"cannot transition from {source} to {target}")
+E       ValueError: cannot transition from OrderStatus.NEW to OrderStatus.SHIPPED
+
+playground/orders.py:41: ValueError
+_____________ OrderAdvanceTests.test_advance_from_terminal_raises ______________
+
+self = <tests.test_orders.OrderAdvanceTests testMethod=test_advance_from_terminal_raises>
+
+    def test_advance_from_terminal_raises(self) -> None:
+        o = _order()
+        o.advance(OrderStatus.CANCELLED)
+        with self.assertRaises(InvalidTransitionError):
+>           o.advance(OrderStatus.RESERVED)
+
+tests/test_orders.py:176: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/orders.py:105: in advance
+    new_status = self._machine.transition(self._status, target)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def transition(self, source: OrderStatus, target: OrderStatus) -> OrderStatus:
+        """Return ``target`` if the transition is allowed, else raise."""
+        if not isinstance(target, OrderStatus):
+            raise TypeError("target must be OrderStatus")
+        if self.can_transition(source, target):
+            return target
+>       raise ValueError(f"cannot transition from {source} to {target}")
+E       ValueError: cannot transition from OrderStatus.CANCELLED to OrderStatus.RESERVED
+
+playground/orders.py:41: ValueError
+_____________ OrderAdvanceTests.test_advance_to_same_status_raises _____________
+
+self = <tests.test_orders.OrderAdvanceTests testMethod=test_advance_to_same_status_raises>
+
+    def test_advance_to_same_status_raises(self) -> None:
+        o = _order()
+        with self.assertRaises(InvalidTransitionError):
+>           o.advance(OrderStatus.NEW)
+
+tests/test_orders.py:181: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/orders.py:105: in advance
+    new_status = self._machine.transition(self._status, target)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def transition(self, source: OrderStatus, target: OrderStatus) -> OrderStatus:
+        """Return ``target`` if the transition is allowed, else raise."""
+        if not isinstance(target, OrderStatus):
+            raise TypeError("target must be OrderStatus")
+        if self.can_transition(source, target):
+            return target
+>       raise ValueError(f"cannot transition from {source} to {target}")
+E       ValueError: cannot transition from OrderStatus.NEW to OrderStatus.NEW
+
+playground/orders.py:41: ValueError
+________ OrderAdvanceTests.test_illegal_advance_raises_and_keeps_status ________
+
+self = <tests.test_orders.OrderAdvanceTests testMethod=test_illegal_advance_raises_and_keeps_status>
+
+    def test_illegal_advance_raises_and_keeps_status(self) -> None:
+        o = _order()
+        with self.assertRaises(InvalidTransitionError):
+>           o.advance(OrderStatus.SHIPPED)
+
+tests/test_orders.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/orders.py:105: in advance
+    new_status = self._machine.transition(self._status, target)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def transition(self, source: OrderStatus, target: OrderStatus) -> OrderStatus:
+        """Return ``target`` if the transition is allowed, else raise."""
+        if not isinstance(target, OrderStatus):
+            raise TypeError("target must be OrderStatus")
+        if self.can_transition(source, target):
+            return target
+>       raise ValueError(f"cannot transition from {source} to {target}")
+E       ValueError: cannot transition from OrderStatus.NEW to OrderStatus.SHIPPED
+
+playground/orders.py:41: ValueError
+___ OrderTotalTests.test_total_reflects_merged_quantities_for_bulk_discount ____
+
+self = <tests.test_orders.OrderTotalTests testMethod=test_total_reflects_merged_quantities_for_bulk_discount>
+
+    def test_total_reflects_merged_quantities_for_bulk_discount(self) -> None:
+        o = _order(pricing=BulkDiscountPricing(FlatPricing(), 3, 10))
+        o.add_item(LineItem("EL-1001", 1, Money(100)))
+        o.add_item(LineItem("EL-1001", 2, Money(100)))
+        # 3 units at 100 = 300, 10% off = 270
+>       self.assertEqual(o.total, Money(270))
+                         ^^^^^^^
+
+tests/test_orders.py:198: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/orders.py:89: in total
+    return self._pricing.price(self._items)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+playground/pricing.py:69: in price
+    discount = base_total * (self._percent_off / 100)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Money(300), factor = 0.1
+
+    def __mul__(self, factor: int) -> Money:
+        """Return ``self`` multiplied by a non-negative integer."""
+        if isinstance(factor, bool) or not isinstance(factor, int):
+>           raise TypeError("factor must be int")
+E           TypeError: factor must be int
+
+playground/models.py:51: TypeError
+__________ BulkDiscountPriceTests.test_at_threshold_applies_discount ___________
+
+self = <tests.test_pricing.BulkDiscountPriceTests testMethod=test_at_threshold_applies_discount>
+
+    def test_at_threshold_applies_discount(self) -> None:
+        items = [LineItem("EL-1001", 3, Money(1000))]
+        d = BulkDiscountPricing(FlatPricing(), 3, 10)
+>       self.assertEqual(d.price(items), Money(2700))
+                         ^^^^^^^^^^^^^^
+
+tests/test_pricing.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/pricing.py:69: in price
+    discount = base_total * (self._percent_off / 100)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Money(3000), factor = 0.1
+
+    def __mul__(self, factor: int) -> Money:
+        """Return ``self`` multiplied by a non-negative integer."""
+        if isinstance(factor, bool) or not isinstance(factor, int):
+>           raise TypeError("factor must be int")
+E           TypeError: factor must be int
+
+playground/models.py:51: TypeError
+________________ BulkDiscountPriceTests.test_call_matches_price ________________
+
+self = <tests.test_pricing.BulkDiscountPriceTests testMethod=test_call_matches_price>
+
+    def test_call_matches_price(self) -> None:
+        items = [LineItem("EL-1001", 3, Money(100))]
+        d = BulkDiscountPricing(FlatPricing(), 1, 10)
+>       self.assertEqual(d(items), d.price(items))
+                         ^^^^^^^^
+
+tests/test_pricing.py:164: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/base.py:43: in __call__
+    return self.price(items)
+           ^^^^^^^^^^^^^^^^^
+playground/pricing.py:69: in price
+    discount = base_total * (self._percent_off / 100)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Money(300), factor = 0.1
+
+    def __mul__(self, factor: int) -> Money:
+        """Return ``self`` multiplied by a non-negative integer."""
+        if isinstance(factor, bool) or not isinstance(factor, int):
+>           raise TypeError("factor must be int")
+E           TypeError: factor must be int
+
+playground/models.py:51: TypeError
+___________ BulkDiscountPriceTests.test_discount_uses_floor_division ___________
+
+self = <tests.test_pricing.BulkDiscountPriceTests testMethod=test_discount_uses_floor_division>
+
+    def test_discount_uses_floor_division(self) -> None:
+        # base 333; 333 * 10 // 100 = 33 -> 300
+        items = [LineItem("EL-1001", 1, Money(333))]
+        d = BulkDiscountPricing(FlatPricing(), 1, 10)
+>       self.assertEqual(d.price(items), Money(300))
+                         ^^^^^^^^^^^^^^
+
+tests/test_pricing.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/pricing.py:69: in price
+    discount = base_total * (self._percent_off / 100)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Money(333), factor = 0.1
+
+    def __mul__(self, factor: int) -> Money:
+        """Return ``self`` multiplied by a non-negative integer."""
+        if isinstance(factor, bool) or not isinstance(factor, int):
+>           raise TypeError("factor must be int")
+E           TypeError: factor must be int
+
+playground/models.py:51: TypeError
+____________ BulkDiscountPriceTests.test_full_discount_yields_zero _____________
+
+self = <tests.test_pricing.BulkDiscountPriceTests testMethod=test_full_discount_yields_zero>
+
+    def test_full_discount_yields_zero(self) -> None:
+        items = [LineItem("EL-1001", 2, Money(500))]
+        d = BulkDiscountPricing(FlatPricing(), 1, 100)
+>       self.assertEqual(d.price(items), Money(0))
+                         ^^^^^^^^^^^^^^
+
+tests/test_pricing.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/pricing.py:69: in price
+    discount = base_total * (self._percent_off / 100)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Money(1000), factor = 1.0
+
+    def __mul__(self, factor: int) -> Money:
+        """Return ``self`` multiplied by a non-negative integer."""
+        if isinstance(factor, bool) or not isinstance(factor, int):
+>           raise TypeError("factor must be int")
+E           TypeError: factor must be int
+
+playground/models.py:51: TypeError
+___________ BulkDiscountPriceTests.test_quantity_summed_across_lines ___________
+
+self = <tests.test_pricing.BulkDiscountPriceTests testMethod=test_quantity_summed_across_lines>
+
+    def test_quantity_summed_across_lines(self) -> None:
+        items = [LineItem("EL-1001", 1, Money(1000)), LineItem("GR-2001", 2, Money(100))]
+        d = BulkDiscountPricing(FlatPricing(), 3, 10)
+        # base = 1000 + 200 = 1200; discount = 120 -> 1080
+>       self.assertEqual(d.price(items), Money(1080))
+                         ^^^^^^^^^^^^^^
+
+tests/test_pricing.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/pricing.py:69: in price
+    discount = base_total * (self._percent_off / 100)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Money(1200), factor = 0.1
+
+    def __mul__(self, factor: int) -> Money:
+        """Return ``self`` multiplied by a non-negative integer."""
+        if isinstance(factor, bool) or not isinstance(factor, int):
+>           raise TypeError("factor must be int")
+E           TypeError: factor must be int
+
+playground/models.py:51: TypeError
+_______________ BulkDiscountPriceTests.test_wraps_base_with_tax ________________
+
+self = <tests.test_pricing.BulkDiscountPriceTests testMethod=test_wraps_base_with_tax>
+
+    def test_wraps_base_with_tax(self) -> None:
+        items = [LineItem("EL-1001", 1, Money(1000))]
+        d = BulkDiscountPricing(FlatPricing(1000), 1, 10)
+        # base with 10% tax = 1100; discount = 110 -> 990
+>       self.assertEqual(d.price(items), Money(990))
+                         ^^^^^^^^^^^^^^
+
+tests/test_pricing.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+playground/pricing.py:69: in price
+    discount = base_total * (self._percent_off / 100)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Money(1100), factor = 0.1
+
+    def __mul__(self, factor: int) -> Money:
+        """Return ``self`` multiplied by a non-negative integer."""
+        if isinstance(factor, bool) or not isinstance(factor, int):
+>           raise TypeError("factor must be int")
+E           TypeError: factor must be int
+
+playground/models.py:51: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_inventory.py::InventoryLedgerContainsLenIterTests::test_contains_malformed_string_false
+FAILED tests/test_inventory.py::InventoryLedgerContainsLenIterTests::test_contains_present_even_if_zero_on_hand_after_commit
+FAILED tests/test_orders.py::OrderStateMachineTests::test_call_is_alias_for_transition
+FAILED tests/test_orders.py::OrderStateMachineTests::test_transition_illegal_raises
+FAILED tests/test_orders.py::OrderAdvanceTests::test_advance_from_terminal_raises
+FAILED tests/test_orders.py::OrderAdvanceTests::test_advance_to_same_status_raises
+FAILED tests/test_orders.py::OrderAdvanceTests::test_illegal_advance_raises_and_keeps_status
+FAILED tests/test_orders.py::OrderTotalTests::test_total_reflects_merged_quantities_for_bulk_discount
+FAILED tests/test_pricing.py::BulkDiscountPriceTests::test_at_threshold_applies_discount
+FAILED tests/test_pricing.py::BulkDiscountPriceTests::test_call_matches_price
+FAILED tests/test_pricing.py::BulkDiscountPriceTests::test_discount_uses_floor_division
+FAILED tests/test_pricing.py::BulkDiscountPriceTests::test_full_discount_yields_zero
+FAILED tests/test_pricing.py::BulkDiscountPriceTests::test_quantity_summed_across_lines
+FAILED tests/test_pricing.py::BulkDiscountPriceTests::test_wraps_base_with_tax
+14 failed, 467 passed, 65 subtests passed in 1.08s
