@@ -1,0 +1,7 @@
+# Install CPU-only torch first:
+#   uv pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+torch==2.15.0
+sentence-transformers==6.2.0
+numpy==2.5.4
+openai==3.46.0
+pytest==9.2.0
